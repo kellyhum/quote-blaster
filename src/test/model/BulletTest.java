@@ -17,4 +17,13 @@ public class BulletTest {
         assertEquals(2, b.getY());
         assertEquals(3, b.getX());
     }
+
+    @Test
+    public void setXYTest() {
+        b.setY(4);
+        assertEquals(4, b.getY());
+
+        b.setX(7);
+        assertEquals(7, b.getX());
+    }
 }

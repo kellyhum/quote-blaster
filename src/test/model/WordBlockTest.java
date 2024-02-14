@@ -13,6 +13,11 @@ public class WordBlockTest {
 
     @Test
     public void getWordTest() {
+        assertEquals("test", w.getWord());
+    }
+
+    @Test
+    public void getXYTest() {
         assertEquals(1, w.getY());
         assertEquals(1, w.getX());
     }
