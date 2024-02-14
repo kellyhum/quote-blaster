@@ -28,5 +28,6 @@ could make my own version of "EmilyBlaster".
 ### User Stories
 - As a user, I want to be able to add my own quote to the quote list
 - As a user, I want to be able to view a list of the quotes that I can play
-- As a user, I want to be able to aim and have "aiming dots" show up when i hover the mouse
-- As a user, I want to shoot bullets when I press the left mouse button
+- As a user, I want to pick which quote I want to play (but only be allowed to play one quote at a time)
+- As a user, I want to shoot bullets when I press the space bar
+- As a user, I want to see my score increase when I hit the correct words
