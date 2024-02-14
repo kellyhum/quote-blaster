@@ -4,18 +4,20 @@ package model;
    primarily for setup, updating and checking values
 */
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private List<WordBlock> currentlyPlayingQuote;
+    private Quote currentlyPlayingQuote;
+    private List<WordBlock> currentlyPlayingQuoteWords;
+    private int score;
 
-    // EFFECTS: constructs an empty game object
-    public Game() {
-
-    }
-
-    // EFFECTS: initializes player, quote, and words
+    // EFFECTS: initializes player, quote, words, and score
     public void setup() {
+        currentlyPlayingQuoteWords = new ArrayList<>();
+        currentlyPlayingQuoteWords.add(new WordBlock("test", 40, 5));
+
+        this.score = 0;
     }
 
     // MODIFIES: this
@@ -48,19 +50,30 @@ public class Game {
         return null;
     }
 
-    // EFFECTS: shoots a bullet if the mouse is pressed
-    public void checkMousePressed() {
-
-    }
-
-    // EFFECTS: adds aiming dots in response to the mouse's x y position
-    public void checkMouseHover() {
-
-    }
-
     // MODIFIES: this
     // EFFECTS: checks if the player has hit the wrong word; if so end game
     public void checkGameOver() {
 
+    }
+
+    public void incScore() {
+        score++;
+    }
+
+    // getters and setters
+    public void setCurrentlyPlayingQuote(Quote q) {
+        this.currentlyPlayingQuote = q;
+    }
+
+    public Quote getCurrentlyPlayingQuote() {
+        return currentlyPlayingQuote;
+    }
+
+    public List<WordBlock> getCurrentlyPlayingQuoteWords() {
+        return currentlyPlayingQuoteWords;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
