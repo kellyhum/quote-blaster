@@ -28,7 +28,6 @@ public class GameDisplay {
     private int middleOfScreen;
     private int playerYPos;
 
-
     // EFFECTS: constructs a new GameDisplay object
     public void setupTextConsole() throws IOException, InterruptedException {
         Scanner s = new Scanner(System.in);
@@ -62,6 +61,8 @@ public class GameDisplay {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up the lanterna interface, ticks every 250 milliseconds
     public void setupGameConsole() throws IOException, InterruptedException {
         random = new Random();
 
@@ -73,16 +74,15 @@ public class GameDisplay {
         playerYPos = screen.getTerminalSize().getRows() - 8;
         screen.startScreen();
 
-        //b = new Bullet(middleOfScreen, playerYPos);
         word = game.getCurrentlyPlayingQuoteWords().get(0);
 
-        // refresh page every 250 milliseconds
         while (true) {
             tick();
             Thread.sleep(250);
         }
     }
 
+    // EFFECTS: checks key commands, renders, and checks collisions
     public void tick() throws IOException {
         screen.clear();
         keyCommands();
@@ -92,6 +92,8 @@ public class GameDisplay {
         screen.refresh();
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks for user input. if space was pressed, make a new Bullet object
     public void keyCommands() throws IOException {
         KeyStroke ks = screen.pollInput();
 
@@ -103,29 +105,30 @@ public class GameDisplay {
 
         if (keyInput == KeyType.Character) {
             if (ks.getCharacter() == ' ') {
-                TextGraphics tg = screen.newTextGraphics();
-                tg.putString(10, 10, "a was pressed");
                 bullet = new Bullet(middleOfScreen, playerYPos);
             }
         }
     }
 
+    // EFFECTS: checks if the bullet has collided with the word. if so, increase the score
+    // and respawn the word in a random spot. if not, move the bullet
     public void bulletWordCollision() {
-        if (((bullet.getY() == word.getY()) && (bullet.getX() == word.getX()))) {
-            game.incScore();
-            // reset so that this true block doesn't loop
-            word.setY(random.nextInt(screen.getTerminalSize().getRows()));
-            word.setX(random.nextInt(screen.getTerminalSize().getColumns()));
-            bullet.setY(25);
-            bullet.setX(22);
+        if (bullet != null) {
+            if (((bullet.getY() == word.getY()) && (bullet.getX() == word.getX()))) {
+                game.incScore();
 
-        } else {
-            bullet.move();
-            drawBullet(bullet.getX(), bullet.getY());
-            drawWord(word.getX(), word.getY());
+                word.setY(random.nextInt(screen.getTerminalSize().getRows()));
+                word.setX(random.nextInt(screen.getTerminalSize().getColumns()));
+
+            } else {
+                bullet.move();
+                drawBullet(bullet.getX(), bullet.getY());
+                drawWord(word.getX(), word.getY());
+            }
         }
     }
 
+    // EFFECTS: render the player on screen
     public void drawPlayer() {
         TerminalPosition t = new TerminalPosition(middleOfScreen - 2, playerYPos);
         TerminalSize s = new TerminalSize(3, 1);
@@ -134,6 +137,7 @@ public class GameDisplay {
         player.drawRectangle(t, s, ' ');
     }
 
+    // EFFECTS: render the bullet on screen at the inputted x, y coordinates
     public void drawBullet(int x, int y) {
         TerminalPosition t = new TerminalPosition(x, y);
         TerminalSize s = new TerminalSize(1, 1);
@@ -142,12 +146,14 @@ public class GameDisplay {
         bullet.drawRectangle(t, s, ' ');
     }
 
+    // EFFECTS: render the word on screen at the inputted x, y coordinates
     public void drawWord(int x, int y) {
         TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(TextColor.ANSI.GREEN);
         tg.putString(x, y, word.getWord());
     }
 
+    // EFFECTS: render the score on screen
     public void drawScore() {
         TextGraphics tg = screen.newTextGraphics();
         tg.setBackgroundColor(TextColor.ANSI.YELLOW);
