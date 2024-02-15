@@ -31,6 +31,7 @@ public class Game {
     public void update(int x, int y) {
         initializeBullet(x, y);
         updateBullet();
+        bulletWordCollision();
         removeOffScreenBullets();
     }
 
@@ -50,6 +51,22 @@ public class Game {
     public void updateBullet() {
         for (Bullet b : activeBullets) {
             b.move();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: checks if the bullet has collided with the word. if so, increase the score
+    // if not, move the bullet
+    public void bulletWordCollision() {
+        for (Bullet b : activeBullets) {
+            for (WordBlock w : activeWords) {
+                if (((b.getY() == w.getY()) && (b.getX() == w.getX()))) {
+                    if (!w.getHit()) {
+                        incScore();
+                        w.setHit(true);
+                    }
+                }
+            }
         }
     }
 

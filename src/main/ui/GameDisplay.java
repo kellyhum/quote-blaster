@@ -98,7 +98,6 @@ public class GameDisplay {
         drawBullets();
         drawWords();
         drawScore();
-        bulletWordCollision();
         screen.refresh();
     }
 
@@ -114,23 +113,6 @@ public class GameDisplay {
         if (ks.getKeyType() == KeyType.Character) {
             if (ks.getCharacter() == ' ') {
                 game.setSpacebarPressed();
-            }
-        }
-    }
-
-    // MODIFIES: game
-    // EFFECTS: checks if the bullet has collided with the word. if so, increase the score
-    // and respawn the word in a random spot. if not, move the bullet
-    public void bulletWordCollision() {
-        for (Bullet b : activeBullets) {
-            for (WordBlock w : activeWords) {
-                if (((b.getY() == w.getY()) && (b.getX() == w.getX()))) {
-                    w.setHit(true);
-                    if (w.getHit()) {
-                        game.incScore();
-                        w.setHit(false);
-                    }
-                }
             }
         }
     }
