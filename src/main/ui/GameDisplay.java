@@ -12,7 +12,9 @@ import com.googlecode.lanterna.screen.Screen;
 import model.Bullet;
 import model.Game;
 import model.WordBlock;
+import model.Quote;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.Random;
@@ -22,11 +24,12 @@ import java.util.Random;
 public class GameDisplay {
     private Screen screen;
     private Game game;
-    private Bullet bullet;
-    private WordBlock word;
     private Random random;
     private int middleOfScreen;
     private int playerYPos;
+
+    private ArrayList<Bullet> activeBullets;
+    private ArrayList<WordBlock> activeWords;
 
     // EFFECTS: constructs a new GameDisplay object
     public void setupTextConsole() throws IOException, InterruptedException {
@@ -51,10 +54,9 @@ public class GameDisplay {
             qd.setup();
 
             // todo: connect quote display and game console functionalities
-            game.setCurrentlyPlayingQuote(
+            game.setActiveQuote(
                     qd.determineCurrentQuote(qd.getQuoteList().getQuoteList())
             );
-            System.out.println("game curr quote:" + game.getCurrentlyPlayingQuote());
 
         } else if (u.equals("G")) {
             setupGameConsole();
@@ -68,26 +70,32 @@ public class GameDisplay {
 
         game = new Game();
         game.setup();
+        game.setActiveQuote(new Quote("test quote", false));
+        game.splitQuoteIntoWords(40, 10);
 
         screen = new DefaultTerminalFactory().createScreen();
         middleOfScreen = screen.getTerminalSize().getColumns() / 2;
         playerYPos = screen.getTerminalSize().getRows() - 8;
         screen.startScreen();
 
-        word = game.getCurrentlyPlayingQuoteWords().get(0);
-
         while (true) {
             tick();
-            Thread.sleep(250);
+            Thread.sleep(75);
         }
     }
 
     // EFFECTS: checks key commands, renders, and checks collisions
     public void tick() throws IOException {
+        this.activeBullets = game.getActiveBullets();
+        // todo: fix this later
+        this.activeWords = (ArrayList<WordBlock>) game.getActiveWords();
+        game.update(middleOfScreen, playerYPos);
+
         screen.clear();
         keyCommands();
         drawPlayer();
-        bulletWordCollision();
+        drawBullets();
+        drawWords();
         drawScore();
         screen.refresh();
     }
@@ -101,32 +109,30 @@ public class GameDisplay {
             return;
         }
 
-        KeyType keyInput = ks.getKeyType();
-
-        if (keyInput == KeyType.Character) {
+        if (ks.getKeyType() == KeyType.Character) {
             if (ks.getCharacter() == ' ') {
-                bullet = new Bullet(middleOfScreen, playerYPos);
+                game.setSpacebarPressed();
             }
         }
     }
 
     // EFFECTS: checks if the bullet has collided with the word. if so, increase the score
     // and respawn the word in a random spot. if not, move the bullet
-    public void bulletWordCollision() {
-        if (bullet != null) {
-            if (((bullet.getY() == word.getY()) && (bullet.getX() == word.getX()))) {
-                game.incScore();
-
-                word.setY(random.nextInt(screen.getTerminalSize().getRows()));
-                word.setX(random.nextInt(screen.getTerminalSize().getColumns()));
-
-            } else {
-                bullet.move();
-                drawBullet(bullet.getX(), bullet.getY());
-                drawWord(word.getX(), word.getY());
-            }
-        }
-    }
+//    public void bulletWordCollision() {
+//        if (bullet != null) {
+//            if (((bullet.getY() == word.getY()) && (bullet.getX() == word.getX()))) {
+//                game.incScore();
+//
+//                word.setY(random.nextInt(screen.getTerminalSize().getRows()));
+//                word.setX(random.nextInt(screen.getTerminalSize().getColumns()));
+//
+//            } else {
+//                bullet.move();
+//                drawBullet(bullet.getX(), bullet.getY());
+//                drawWord(word.getX(), word.getY());
+//            }
+//        }
+//    }
 
     // EFFECTS: render the player on screen
     public void drawPlayer() {
@@ -137,20 +143,24 @@ public class GameDisplay {
         player.drawRectangle(t, s, ' ');
     }
 
-    // EFFECTS: render the bullet on screen at the inputted x, y coordinates
-    public void drawBullet(int x, int y) {
-        TerminalPosition t = new TerminalPosition(x, y);
-        TerminalSize s = new TerminalSize(1, 1);
-        TextGraphics bullet = screen.newTextGraphics();
-        bullet.setBackgroundColor(TextColor.ANSI.RED);
-        bullet.drawRectangle(t, s, ' ');
+    // EFFECTS: render the bullets on screen at their x y coordinates
+    public void drawBullets() {
+        for (Bullet b : activeBullets) {
+            TerminalPosition t = new TerminalPosition(b.getX(), b.getY());
+            TerminalSize s = new TerminalSize(1, 1);
+            TextGraphics bullet = screen.newTextGraphics();
+            bullet.setBackgroundColor(TextColor.ANSI.RED);
+            bullet.drawRectangle(t, s, ' ');
+        }
     }
 
-    // EFFECTS: render the word on screen at the inputted x, y coordinates
-    public void drawWord(int x, int y) {
-        TextGraphics tg = screen.newTextGraphics();
-        tg.setBackgroundColor(TextColor.ANSI.GREEN);
-        tg.putString(x, y, word.getWord());
+    // EFFECTS: render the words on screen at their x y coordinates
+    public void drawWords() {
+        for (WordBlock w : activeWords) {
+            TextGraphics tg = screen.newTextGraphics();
+            tg.setBackgroundColor(TextColor.ANSI.GREEN);
+            tg.putString(w.getX(), w.getY(), w.getWord());
+        }
     }
 
     // EFFECTS: render the score on screen

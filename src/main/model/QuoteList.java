@@ -7,11 +7,9 @@ import java.util.ArrayList;
 public class QuoteList {
     private final ArrayList<Quote> quoteList;
 
-    // EFFECTS: constructs a new QuoteList object with two Quotes in the quoteList
+    // EFFECTS: constructs a new QuoteList object with no quotes in the quote list
     public QuoteList() {
         quoteList = new ArrayList<>();
-        quoteList.add(new Quote("All's fair in love and war", false));
-        quoteList.add(new Quote("Curiosity killed the cat", false));
     }
 
     // MODIFIES: this

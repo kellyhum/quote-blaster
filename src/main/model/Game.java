@@ -4,50 +4,74 @@ package model;
    primarily for setup, updating and checking values
 */
 
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private Quote currentlyPlayingQuote;
-    private List<WordBlock> currentlyPlayingQuoteWords;
     private int score;
+    private boolean spacebarPressed;
+    private ArrayList<Bullet> activeBullets;
+    private Quote activeQuote;
+    private ArrayList<WordBlock> activeWords;
+    private Random random;
 
     // EFFECTS: initializes player, quote, words, and score
     public void setup() {
-        currentlyPlayingQuoteWords = new ArrayList<>();
-        currentlyPlayingQuoteWords.add(new WordBlock("test", 40, 5));
-
         this.score = 0;
+        this.spacebarPressed = false;
+        activeBullets = new ArrayList<>();
+        activeQuote = null;
+        activeWords = new ArrayList<>();
+        random = new Random();
     }
 
     // MODIFIES: this
     // EFFECTS: updates the game every interval
-    public void update() {
-    }
-
-    // MODIFIES: this
-    // EFFECTS: checks if the bullet has hit the wordblock, removes
-    // both bullet and wordblock
-    public void checkBulletWordBlockCollision() {
-
+    public void update(int x, int y) {
+        initializeBullet(x, y);
+        updateBullet();
+        removeOffScreenBullets();
     }
 
     // MODIFIES: this
     // EFFECTS: moves the bullets up the screen every update
-    public void moveBullets() {
+    public void initializeBullet(int x, int y) {
+        if (spacebarPressed) {
+            Bullet b = new Bullet(x, y);
+            activeBullets.add(b);
+            spacebarPressed = false;
+        }
+    }
 
+    public void updateBullet() {
+        for (Bullet b : activeBullets) {
+            b.move();
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: removes the bullets when they go past the screen boundaries
     public void removeOffScreenBullets() {
-
+        for (int i = 0; i < activeBullets.size(); i++) {
+            if (activeBullets.get(i).getY() < 0) {
+                activeBullets.remove(activeBullets.get(i));
+            }
+        }
     }
 
     // MODIFIES: this
-    // EFFECTS: turns a quote into a list of wordblocks
-    public List<WordBlock> splitQuoteIntoWords() {
-        return null;
+    // EFFECTS: turns a quote into a list of word blocks, set the currentlyPlayingQuoteWords to the
+    // resulting list
+    public void splitQuoteIntoWords(int width, int height) {
+        String[] splitQuote = this.activeQuote.getQuoteText().split(" ");
+
+        for (String s : splitQuote) {
+            int randomXPos = random.nextInt(width);
+            int randomYPos = random.nextInt(height);
+
+            activeWords.add(new WordBlock(s, randomXPos, randomYPos));
+        }
     }
 
     // MODIFIES: this
@@ -56,24 +80,38 @@ public class Game {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: increments the score by 1
     public void incScore() {
         score++;
     }
 
     // getters and setters
-    public void setCurrentlyPlayingQuote(Quote q) {
-        this.currentlyPlayingQuote = q;
+    public void setActiveQuote(Quote q) {
+        this.activeQuote = q;
     }
 
-    public Quote getCurrentlyPlayingQuote() {
-        return currentlyPlayingQuote;
+    public Quote getActiveQuote() {
+        return activeQuote;
     }
 
-    public List<WordBlock> getCurrentlyPlayingQuoteWords() {
-        return currentlyPlayingQuoteWords;
+    public List<WordBlock> getActiveWords() {
+        return activeWords;
     }
 
     public int getScore() {
         return score;
+    }
+
+    public boolean getSpacebarPressed() {
+        return spacebarPressed;
+    }
+
+    public void setSpacebarPressed() {
+        spacebarPressed = true;
+    }
+
+    public ArrayList<Bullet> getActiveBullets() {
+        return activeBullets;
     }
 }

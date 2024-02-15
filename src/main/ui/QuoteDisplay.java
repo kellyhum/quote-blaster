@@ -18,7 +18,6 @@ public class QuoteDisplay {
 
     public void setup() {
         printQuotes();
-        System.out.println("current quote:" + determineCurrentQuote(quoteList.getQuoteList()));
         quoteCommands();
     }
 
@@ -66,7 +65,6 @@ public class QuoteDisplay {
             quoteList.addQuote(q);
 
             printQuotes();
-            System.out.println("current quote:" + determineCurrentQuote(quoteList.getQuoteList()));
             quoteCommands();
         } else if (u.equals("B")) {
             // todo!!!

@@ -15,9 +15,55 @@ public class GameTest {
 
     @Test
     public void setupTest() {
-        assertNull(g.getCurrentlyPlayingQuote());
-        assertEquals(0, g.getCurrentlyPlayingQuoteWords().size());
+        assertEquals(0, g.getActiveWords().size());
+        assertEquals(0, g.getActiveBullets().size());
+        assertNull(g.getActiveQuote());
+        assertEquals(0, g.getActiveWords().size());
         assertEquals(0, g.getScore());
+    }
+
+    @Test
+    public void updateTest() {
+        g.setSpacebarPressed();
+        g.update(5, 5);
+
+        assertEquals(1, g.getActiveBullets().size());
+        assertFalse(g.getSpacebarPressed());
+
+        assertEquals(5, g.getActiveBullets().get(0).getX());
+        assertEquals(4, g.getActiveBullets().get(0).getY());
+    }
+
+    @Test
+    public void initializeBulletTest() {
+        g.setSpacebarPressed();
+        g.initializeBullet(2, 2);
+
+        assertEquals(1, g.getActiveBullets().size());
+        assertFalse(g.getSpacebarPressed());
+    }
+
+    @Test
+    public void updateBulletTest() {
+        g.setSpacebarPressed();
+        g.initializeBullet(2, 2);
+        g.updateBullet();
+
+        assertEquals(2, g.getActiveBullets().get(0).getX());
+        assertEquals(1, g.getActiveBullets().get(0).getY());
+    }
+
+    @Test
+    public void removeOffScreenTest() {
+        g.setSpacebarPressed();
+        g.initializeBullet(2, 0);
+
+        assertEquals(1, g.getActiveBullets().size());
+
+        g.updateBullet();
+        g.removeOffScreenBullets();
+
+        assertEquals(0, g.getActiveBullets().size());
     }
 
     @Test
@@ -28,24 +74,36 @@ public class GameTest {
 
     @Test
     public void getCurrentQuoteTest() {
-        assertNull(g.getCurrentlyPlayingQuote());
+        assertNull(g.getActiveQuote());
     }
 
     @Test
     public void setCurrentQuoteTest() {
         Quote k = new Quote("another test", false);
-        g.setCurrentlyPlayingQuote(k);
+        g.setActiveQuote(k);
 
-        assertEquals(k, g.getCurrentlyPlayingQuote());
+        assertEquals(k, g.getActiveQuote());
     }
 
     @Test
-    public void getCurrentQuoteWordsTest() {
-        assertEquals(0, g.getCurrentlyPlayingQuoteWords().size());
+    public void getActiveWordsTest() {
+        assertEquals(0, g.getActiveWords().size());
     }
 
     @Test
     public void getScoreTest() {
         assertEquals(0, g.getScore());
+    }
+
+    @Test
+    public void setSpacebarTest() {
+        assertFalse(g.getSpacebarPressed());
+        g.setSpacebarPressed();
+        assertTrue(g.getSpacebarPressed());
+    }
+
+    @Test
+    public void getActiveBullets() {
+        assertEquals(0, g.getActiveBullets().size());
     }
 }
