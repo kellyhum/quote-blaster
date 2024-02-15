@@ -76,9 +76,9 @@ public class Game {
 
     // MODIFIES: this
     // EFFECTS: checks if the player has hit the wrong word; if so end game
-    public void checkGameOver() {
-
-    }
+//    public void checkGameOver() {
+//
+//    }
 
     // MODIFIES: this
     // EFFECTS: increments the score by 1
