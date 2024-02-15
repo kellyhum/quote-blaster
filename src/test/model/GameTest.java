@@ -67,6 +67,16 @@ public class GameTest {
     }
 
     @Test
+    public void splitQuoteTest() {
+        g.setActiveQuote(new Quote("test quote", false));
+        g.splitQuoteIntoWords(4, 3);
+
+        assertEquals(2, g.getActiveWords().size());
+        assertEquals("test", g.getActiveWords().get(0).getWord());
+        assertEquals("quote", g.getActiveWords().get(1).getWord());
+    }
+
+    @Test
     public void incScoreTest() {
         g.incScore();
         assertEquals(1, g.getScore());
