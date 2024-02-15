@@ -30,4 +30,16 @@ public class WordBlockTest {
         w.setY(2);
         assertEquals(2, w.getY());
     }
+
+    @Test
+    public void getHitTest() {
+        assertFalse(w.getHit());
+    }
+
+    @Test
+    public void setHitTest() {
+        assertFalse(w.getHit());
+        w.setHit(true);
+        assertTrue(w.getHit());
+    }
 }
