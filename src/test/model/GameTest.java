@@ -67,6 +67,21 @@ public class GameTest {
     }
 
     @Test
+    public void bulletWordCollisionTest() {
+        WordBlock testWord = new WordBlock("test", 2, 1);
+        g.initializeBullet(2, 1);
+        g.getActiveWords().add(testWord);
+
+        assertEquals(0, g.getScore());
+        assertFalse(g.getActiveWords().get(0).getHit());
+
+        g.bulletWordCollision();
+
+        assertEquals(1, g.getScore());
+        assertTrue(g.getActiveWords().get(0).getHit());
+    }
+
+    @Test
     public void splitQuoteTest() {
         g.setActiveQuote(new Quote("test quote", false));
         g.splitQuoteIntoWords(4, 3);
