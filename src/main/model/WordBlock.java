@@ -6,6 +6,7 @@ public class WordBlock {
     private final String word;
     private int x1;
     private int y1;
+    private boolean hit;
 
     // EFFECTS: constructs a new WordBlock object with a word value of the
     // inputted word
@@ -13,9 +14,10 @@ public class WordBlock {
         this.word = word;
         this.x1 = x;
         this.y1 = y;
+        this.hit = false;
     }
 
-    // getters
+    // getters and setters
     public String getWord() {
         return this.word;
     }
@@ -34,5 +36,13 @@ public class WordBlock {
 
     public void setY(int y) {
         this.y1 = y;
+    }
+
+    public boolean getHit() {
+        return hit;
+    }
+
+    public void setHit(boolean b) {
+        hit = b;
     }
 }

@@ -35,7 +35,8 @@ public class Game {
     }
 
     // MODIFIES: this
-    // EFFECTS: moves the bullets up the screen every update
+    // EFFECTS: if the spacebar was pressed (True), then make a new bullet and set
+    // the spacebar to false
     public void initializeBullet(int x, int y) {
         if (spacebarPressed) {
             Bullet b = new Bullet(x, y);
@@ -44,6 +45,8 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves the bullets up every tick
     public void updateBullet() {
         for (Bullet b : activeBullets) {
             b.move();

@@ -17,16 +17,15 @@ import model.Quote;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
-import java.util.Random;
 
 /* holds all the console commands that show up on screen,
 * also initiates the Lanterna game console */
 public class GameDisplay {
     private Screen screen;
     private Game game;
-    private Random random;
     private int middleOfScreen;
     private int playerYPos;
+    private WordBlock testBlock;
 
     private ArrayList<Bullet> activeBullets;
     private ArrayList<WordBlock> activeWords;
@@ -66,7 +65,7 @@ public class GameDisplay {
     // MODIFIES: this
     // EFFECTS: sets up the lanterna interface, ticks every 250 milliseconds
     public void setupGameConsole() throws IOException, InterruptedException {
-        random = new Random();
+        testBlock = new WordBlock("testBlock", 40, 5);
 
         game = new Game();
         game.setup();
@@ -84,11 +83,13 @@ public class GameDisplay {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: checks key commands, renders, and checks collisions
     public void tick() throws IOException {
         this.activeBullets = game.getActiveBullets();
         // todo: fix this later
         this.activeWords = (ArrayList<WordBlock>) game.getActiveWords();
+        this.activeWords.add(testBlock);
         game.update(middleOfScreen, playerYPos);
 
         screen.clear();
@@ -97,10 +98,11 @@ public class GameDisplay {
         drawBullets();
         drawWords();
         drawScore();
+        bulletWordCollision();
         screen.refresh();
     }
 
-    // MODIFIES: this
+    // MODIFIES: game
     // EFFECTS: checks for user input. if space was pressed, make a new Bullet object
     public void keyCommands() throws IOException {
         KeyStroke ks = screen.pollInput();
@@ -116,23 +118,22 @@ public class GameDisplay {
         }
     }
 
+    // MODIFIES: game
     // EFFECTS: checks if the bullet has collided with the word. if so, increase the score
     // and respawn the word in a random spot. if not, move the bullet
-//    public void bulletWordCollision() {
-//        if (bullet != null) {
-//            if (((bullet.getY() == word.getY()) && (bullet.getX() == word.getX()))) {
-//                game.incScore();
-//
-//                word.setY(random.nextInt(screen.getTerminalSize().getRows()));
-//                word.setX(random.nextInt(screen.getTerminalSize().getColumns()));
-//
-//            } else {
-//                bullet.move();
-//                drawBullet(bullet.getX(), bullet.getY());
-//                drawWord(word.getX(), word.getY());
-//            }
-//        }
-//    }
+    public void bulletWordCollision() {
+        for (Bullet b : activeBullets) {
+            for (WordBlock w : activeWords) {
+                if (((b.getY() == w.getY()) && (b.getX() == w.getX()))) {
+                    w.setHit(true);
+                    if (w.getHit()) {
+                        game.incScore();
+                        w.setHit(false);
+                    }
+                }
+            }
+        }
+    }
 
     // EFFECTS: render the player on screen
     public void drawPlayer() {
