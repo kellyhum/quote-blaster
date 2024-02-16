@@ -1,7 +1,7 @@
 package model;
 
 /* The main game mechanism class,
-   primarily for setup, updating and checking values
+   primarily for setup, updating and changing values
 */
 
 import java.util.Random;
@@ -10,16 +10,17 @@ import java.util.List;
 
 public class Game {
     private int score;
-    private boolean spacebarPressed;
+    private boolean spaceBarPressed;
     private ArrayList<Bullet> activeBullets;
     private Quote activeQuote;
     private ArrayList<WordBlock> activeWords;
     private Random random;
 
-    // EFFECTS: initializes player, quote, words, and score
+    // MODIFIES: this
+    // EFFECTS: initializes player, space bar, quote, words, random, and score
     public void setup() {
         this.score = 0;
-        this.spacebarPressed = false;
+        this.spaceBarPressed = false;
         activeBullets = new ArrayList<>();
         activeQuote = null;
         activeWords = new ArrayList<>();
@@ -36,13 +37,13 @@ public class Game {
     }
 
     // MODIFIES: this
-    // EFFECTS: if the spacebar was pressed (True), then make a new bullet and set
-    // the spacebar to false
+    // EFFECTS: if the space bar was pressed, then make a new bullet, add the bullet
+    // to the list and set the space bar to false
     public void initializeBullet(int x, int y) {
-        if (spacebarPressed) {
+        if (spaceBarPressed) {
             Bullet b = new Bullet(x, y);
             activeBullets.add(b);
-            spacebarPressed = false;
+            spaceBarPressed = false;
         }
     }
 
@@ -81,8 +82,8 @@ public class Game {
     }
 
     // MODIFIES: this
-    // EFFECTS: turns a quote into a list of word blocks, set the currentlyPlayingQuoteWords to the
-    // resulting list
+    // EFFECTS: turns a quote into a list of word blocks with random positions, set the activeWords
+    // list to the resulting list
     public void splitQuoteIntoWords(int width, int height) {
         String[] splitQuote = this.activeQuote.getQuoteText().split(" ");
 
@@ -123,12 +124,12 @@ public class Game {
         return score;
     }
 
-    public boolean getSpacebarPressed() {
-        return spacebarPressed;
+    public boolean getSpaceBarPressed() {
+        return spaceBarPressed;
     }
 
-    public void setSpacebarPressed() {
-        spacebarPressed = true;
+    public void setSpaceBarPressed() {
+        spaceBarPressed = true;
     }
 
     public ArrayList<Bullet> getActiveBullets() {

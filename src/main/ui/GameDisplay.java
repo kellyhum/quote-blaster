@@ -112,7 +112,7 @@ public class GameDisplay {
 
         if (ks.getKeyType() == KeyType.Character) {
             if (ks.getCharacter() == ' ') {
-                game.setSpacebarPressed();
+                game.setSpaceBarPressed();
             }
         }
     }

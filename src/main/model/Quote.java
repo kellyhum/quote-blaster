@@ -9,7 +9,7 @@ public class Quote {
     private boolean deleteQuote;
 
     // EFFECTS: constructs a Quote object with the quote being the quote parameter value, and
-    // whether or not the user wants to play the quote
+    // whether the user wants to play the quote
     public Quote(String quote, boolean isTheCurrentLevel) {
         quoteText = quote;
         this.isTheCurrentLevel = isTheCurrentLevel;

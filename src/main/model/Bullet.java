@@ -1,7 +1,6 @@
 package model;
 
-/* A bullet that collides with WordBlocks. When it touches the WordBlocks,
-*  both bullet and block disappear and score is increased by 1. */
+/* A bullet that moves up the screen and has x and y coordinates. */
 
 public class Bullet {
     private int x1;
