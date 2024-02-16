@@ -35,11 +35,19 @@ public class GameTest {
     }
 
     @Test
-    public void initializeBulletTest() {
+    public void initializeBulletSpacePressedTest() {
         g.setSpaceBarPressed();
         g.initializeBullet(2, 2);
 
         assertEquals(1, g.getActiveBullets().size());
+        assertFalse(g.getSpaceBarPressed());
+    }
+
+    @Test
+    public void initializeBulletSpaceNotPressedTest() {
+        g.initializeBullet(2, 2);
+
+        assertEquals(0, g.getActiveBullets().size());
         assertFalse(g.getSpaceBarPressed());
     }
 
@@ -69,9 +77,9 @@ public class GameTest {
     @Test
     public void bulletWordCollisionTest() {
         WordBlock testWord = new WordBlock("test", 2, 1);
+        g.getActiveWords().add(testWord);
         g.setSpaceBarPressed();
         g.initializeBullet(2, 1);
-        g.getActiveWords().add(testWord);
 
         assertEquals(0, g.getScore());
         assertFalse(g.getActiveWords().get(0).getHit());
@@ -80,6 +88,38 @@ public class GameTest {
 
         assertEquals(1, g.getScore());
         assertTrue(g.getActiveWords().get(0).getHit());
+    }
+
+    @Test
+    public void bulletWordCollisionDiffXTest() {
+        WordBlock testWord = new WordBlock("test", 2, 1);
+        g.getActiveWords().add(testWord);
+        g.setSpaceBarPressed();
+        g.initializeBullet(1, 1);
+
+        assertEquals(0, g.getScore());
+        assertFalse(g.getActiveWords().get(0).getHit());
+
+        g.bulletWordCollision();
+
+        assertEquals(0, g.getScore());
+        assertFalse(g.getActiveWords().get(0).getHit());
+    }
+
+    @Test
+    public void bulletWordCollisionDiffYTest() {
+        WordBlock testWord = new WordBlock("test", 2, 1);
+        g.getActiveWords().add(testWord);
+        g.setSpaceBarPressed();
+        g.initializeBullet(2, 6);
+
+        assertEquals(0, g.getScore());
+        assertFalse(g.getActiveWords().get(0).getHit());
+
+        g.bulletWordCollision();
+
+        assertEquals(0, g.getScore());
+        assertFalse(g.getActiveWords().get(0).getHit());
     }
 
     @Test
