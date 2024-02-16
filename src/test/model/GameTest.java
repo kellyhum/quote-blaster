@@ -24,11 +24,11 @@ public class GameTest {
 
     @Test
     public void updateTest() {
-        g.setSpacebarPressed();
+        g.setSpaceBarPressed();
         g.update(5, 5);
 
         assertEquals(1, g.getActiveBullets().size());
-        assertFalse(g.getSpacebarPressed());
+        assertFalse(g.getSpaceBarPressed());
 
         assertEquals(5, g.getActiveBullets().get(0).getX());
         assertEquals(4, g.getActiveBullets().get(0).getY());
@@ -36,16 +36,16 @@ public class GameTest {
 
     @Test
     public void initializeBulletTest() {
-        g.setSpacebarPressed();
+        g.setSpaceBarPressed();
         g.initializeBullet(2, 2);
 
         assertEquals(1, g.getActiveBullets().size());
-        assertFalse(g.getSpacebarPressed());
+        assertFalse(g.getSpaceBarPressed());
     }
 
     @Test
     public void updateBulletTest() {
-        g.setSpacebarPressed();
+        g.setSpaceBarPressed();
         g.initializeBullet(2, 2);
         g.updateBullet();
 
@@ -55,7 +55,7 @@ public class GameTest {
 
     @Test
     public void removeOffScreenTest() {
-        g.setSpacebarPressed();
+        g.setSpaceBarPressed();
         g.initializeBullet(2, 0);
 
         assertEquals(1, g.getActiveBullets().size());
@@ -69,6 +69,7 @@ public class GameTest {
     @Test
     public void bulletWordCollisionTest() {
         WordBlock testWord = new WordBlock("test", 2, 1);
+        g.setSpaceBarPressed();
         g.initializeBullet(2, 1);
         g.getActiveWords().add(testWord);
 
@@ -122,9 +123,9 @@ public class GameTest {
 
     @Test
     public void setSpacebarTest() {
-        assertFalse(g.getSpacebarPressed());
-        g.setSpacebarPressed();
-        assertTrue(g.getSpacebarPressed());
+        assertFalse(g.getSpaceBarPressed());
+        g.setSpaceBarPressed();
+        assertTrue(g.getSpaceBarPressed());
     }
 
     @Test
