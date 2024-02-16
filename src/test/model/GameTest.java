@@ -75,7 +75,7 @@ public class GameTest {
     }
 
     @Test
-    public void bulletWordCollisionTest() {
+    public void bulletWordCollisionPassesTest() {
         WordBlock testWord = new WordBlock("test", 2, 1);
         g.getActiveWords().add(testWord);
         g.setSpaceBarPressed();
@@ -120,6 +120,23 @@ public class GameTest {
 
         assertEquals(0, g.getScore());
         assertFalse(g.getActiveWords().get(0).getHit());
+    }
+
+    @Test
+    public void bulletWordCollisionHitTrueTest() {
+        WordBlock testWord = new WordBlock("test", 2, 1);
+        testWord.setHit(true);
+        g.getActiveWords().add(testWord);
+        g.setSpaceBarPressed();
+        g.initializeBullet(2, 1);
+
+        assertEquals(0, g.getScore());
+        assertTrue(g.getActiveWords().get(0).getHit());
+
+        g.bulletWordCollision();
+
+        assertEquals(0, g.getScore());
+        assertTrue(g.getActiveWords().get(0).getHit());
     }
 
     @Test
