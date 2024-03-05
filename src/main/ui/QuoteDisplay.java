@@ -11,16 +11,19 @@ public class QuoteDisplay {
     private final QuoteList quoteList;
     private final Scanner scan;
 
+    // EFFECTS: intiialize Scanner and empty QuoteList
     public QuoteDisplay() {
         quoteList = new QuoteList();
         scan = new Scanner(System.in);
     }
 
+    // EFFECTS: runs quote displaying and commands functions
     public void setup() {
         printQuotes();
         quoteCommands();
     }
 
+    // EFFECTS: prints current quotelist
     public void printQuotes() {
         System.out.println("\nCurrent quote list:");
 
@@ -32,6 +35,7 @@ public class QuoteDisplay {
         }
     }
 
+    // EFFECTS: asks for user input
     public void quoteCommands() {
         System.out.println("\nPress A to add a new quote");
         System.out.println("Press B to go back to the main menu");
@@ -40,6 +44,7 @@ public class QuoteDisplay {
         checkUserCommand(userInput);
     }
 
+    // EFFECTS: returns the quote that has currentLevel = true
     public Quote determineCurrentQuote(ArrayList<Quote> ql) {
         for (Quote q : ql) {
             if (q.getTheCurrentLevel()) {
@@ -50,6 +55,7 @@ public class QuoteDisplay {
         return null;
     }
 
+    // EFFECTS: if user clicks a, let them add a new quote
     public void checkUserCommand(String u) {
         if (u.equals("A")) {
             System.out.println("Enter your new quote here:");

@@ -15,12 +15,12 @@ public class QuoteListTest {
 
     @Test
     public void quoteListTest() {
-        assertEquals(2, q.getQuoteList().size());
+        assertEquals(0, q.getQuoteList().size());
     }
 
     @Test
     public void addQuoteTest() {
         q.addQuote(this.quote);
-        assertEquals(3, q.getQuoteList().size());
+        assertEquals(1, q.getQuoteList().size());
     }
 }
