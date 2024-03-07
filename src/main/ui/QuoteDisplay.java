@@ -18,6 +18,7 @@ public class QuoteDisplay {
     private JsonReader jsonReader;
     private QuoteList quoteList;
     private final Scanner scan;
+    private boolean startGame;
 
     // EFFECTS: intiialize Scanner, empty QuoteList, and both JsonWriter and JsonReader
     public QuoteDisplay() {
@@ -25,12 +26,13 @@ public class QuoteDisplay {
         scan = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_FILE);
         jsonReader = new JsonReader(JSON_FILE);
+        startGame = false;
     }
 
     // EFFECTS: runs quote displaying and commands functions
-    public void setup() {
+    public boolean setup() {
         printQuotes();
-        quoteCommands();
+        return quoteCommands();
     }
 
     // EFFECTS: prints current quotelist
@@ -41,20 +43,25 @@ public class QuoteDisplay {
             System.out.print(q.getQuoteText());
             System.out.print(", ");
             System.out.print(q.getTheCurrentLevel());
-            System.out.println("");
+            System.out.println();
         }
     }
 
     // EFFECTS: asks for user input
-    public void quoteCommands() {
+    public boolean quoteCommands() {
         System.out.println("\nPress A to add a new quote");
         System.out.println("Press S to save the current quotelist");
         System.out.println("Press L to load the previous quotelist");
         System.out.println("Press V to view the quotelist");
-        System.out.println("Press B to go back to the main menu");
+        System.out.println("Press B to run the game");
 
         String userInput = scan.nextLine();
         checkUserCommand(userInput);
+
+        if (startGame) {
+            return true;
+        }
+        return false;
     }
 
     // EFFECTS: returns the quote that has currentLevel = true
@@ -95,8 +102,8 @@ public class QuoteDisplay {
             printQuotes();
             quoteCommands();
         } else if (u.equals("B")) {
-            // todo!!!
-            return;
+            //return;
+            startGame = true;
         }
     }
 
