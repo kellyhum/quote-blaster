@@ -9,68 +9,71 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.screen.Screen;
 
-import model.Bullet;
-import model.Game;
-import model.WordBlock;
-import model.Quote;
+import model.*;
+
+import persistence.JsonWriter;
+import persistence.JsonReader;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.io.IOException;
 
 /* holds all the console commands that show up on screen,
 * also initiates the Lanterna game console */
 public class GameDisplay {
+    private static final String JSON_FILE = "./data/testGame.json";
+    private static final String JSON_QUOTE = "./data/test.json";
+
     private Screen screen;
     private Game game;
     private int middleOfScreen;
     private int playerYPos;
-    private WordBlock testBlock;
 
     private ArrayList<Bullet> activeBullets;
     private ArrayList<WordBlock> activeWords;
+    private int score;
+    private QuoteList ql;
+
+
+    private JsonWriter writer;
+    private JsonWriter writerQuote;
+    private JsonReader reader;
+    private JsonReader readerQuote;
 
     // EFFECTS: constructs a new GameDisplay object
     public void setupTextConsole() throws IOException, InterruptedException {
-        Scanner s = new Scanner(System.in);
+        writer = new JsonWriter(JSON_FILE);
+        writerQuote = new JsonWriter(JSON_QUOTE);
+        reader = new JsonReader(JSON_FILE);
+        readerQuote = new JsonReader(JSON_QUOTE);
 
-        textCommands();
-        String userInput = s.nextLine();
-
-        checkUserCommand(userInput);
-    }
-
-    // EFFECTS: shows the instruction commands on the console
-    public void textCommands() {
-        System.out.println("Press Q to view the quote list");
-        System.out.println("Press G to start a new game");
+        checkUserCommand();
     }
 
     // EFFECTS: creates specific objects based on which key the user pressed
-    public void checkUserCommand(String u) throws IOException, InterruptedException {
-        if (u.equals("Q")) {
-            QuoteDisplay qd = new QuoteDisplay();
-            qd.setup();
-
-            // todo: connect quote display and game console functionalities
-            game.setActiveQuote(
-                    qd.determineCurrentQuote(qd.getQuoteList().getQuoteList())
-            );
-
-        } else if (u.equals("G")) {
-            setupGameConsole();
+    public void checkUserCommand() throws IOException, InterruptedException {
+        QuoteDisplay qd = new QuoteDisplay();
+        if (qd.setup()) {
+            setupGameConsole(qd.getQuoteList());
         }
     }
 
     // MODIFIES: this
     // EFFECTS: sets up the lanterna interface, ticks every 250 milliseconds
-    public void setupGameConsole() throws IOException, InterruptedException {
+    public void setupGameConsole(QuoteList ql) throws IOException, InterruptedException {
+        WordBlock testBlock;
         testBlock = new WordBlock("testBlock", 40, 5);
+        System.out.println("Press s to save the current state of the game");
+        System.out.println("Press l to load the last state of the game");
 
         game = new Game();
         game.setup();
         game.setActiveQuote(new Quote("test quote", false));
         game.splitQuoteIntoWords(40, 10);
+
+        //this.activeWords = (ArrayList<WordBlock>) game.getActiveWords();
+        this.activeWords = new ArrayList<>();
+        this.activeWords.add(testBlock);
+        this.ql = ql;
 
         screen = new DefaultTerminalFactory().createScreen();
         middleOfScreen = screen.getTerminalSize().getColumns() / 2;
@@ -87,12 +90,14 @@ public class GameDisplay {
     // EFFECTS: checks key commands, renders, and checks collisions
     public void tick() throws IOException {
         this.activeBullets = game.getActiveBullets();
-        // todo: fix this later
-        this.activeWords = (ArrayList<WordBlock>) game.getActiveWords();
-        this.activeWords.add(testBlock);
+
+        this.activeWords.removeAll(game.getActiveWords()); // remove duplicates
+        this.activeWords.addAll(game.getActiveWords()); // add new words
+
         game.update(middleOfScreen, playerYPos);
 
         screen.clear();
+        //this.score = game.getScore();
         keyCommands();
         drawPlayer();
         drawBullets();
@@ -113,6 +118,19 @@ public class GameDisplay {
         if (ks.getKeyType() == KeyType.Character) {
             if (ks.getCharacter() == ' ') {
                 game.setSpaceBarPressed();
+            } else if (ks.getCharacter() == 's') {
+                writer.open();
+                writer.writeGameStats(this.score, this.activeWords);
+                writerQuote.writeQuoteList(this.ql);
+                writer.close();
+                System.out.println("saved");
+            } else if (ks.getCharacter() == 'l') {
+                this.ql = readerQuote.readQuoteList();
+                this.score = reader.readAndParseScore();
+                this.activeWords = reader.readWordList();
+                System.out.println("loaded");
+            } else if (ks.getCharacter() == 'v') {
+                System.out.println(this.ql.getQuoteList().toString());
             }
         }
     }
@@ -154,6 +172,6 @@ public class GameDisplay {
 
         TextGraphics tg2 = screen.newTextGraphics();
         tg2.setBackgroundColor(TextColor.ANSI.YELLOW);
-        tg2.putString(8, 1, Integer.toString(game.getScore()));
+        tg2.putString(8, 1, Integer.toString(this.score));
     }
 }
