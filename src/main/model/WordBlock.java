@@ -2,6 +2,8 @@ package model;
 
 /* A single word in a quote */
 
+import org.json.JSONObject;
+
 public class WordBlock {
     private final String word;
     private int x1;
@@ -15,6 +17,14 @@ public class WordBlock {
         this.x1 = x;
         this.y1 = y;
         this.hit = false;
+    }
+
+    public JSONObject convertToJson() {
+        JSONObject json = new JSONObject();
+        json.put("word", word);
+        json.put("x", x1);
+        json.put("y", y1);
+        return json;
     }
 
     // getters and setters
