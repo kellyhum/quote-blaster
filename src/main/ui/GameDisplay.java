@@ -120,15 +120,16 @@ public class GameDisplay {
                 game.setSpaceBarPressed();
             } else if (ks.getCharacter() == 's') {
                 writer.open();
+                writerQuote.open();
                 writer.writeGameStats(this.score, this.activeWords);
                 writerQuote.writeQuoteList(this.ql);
                 writer.close();
+                writerQuote.close();
                 System.out.println("saved");
             } else if (ks.getCharacter() == 'l') {
                 this.ql = readerQuote.readQuoteList();
                 this.score = reader.readAndParseScore();
                 this.activeWords = reader.readWordList();
-                System.out.println("loaded");
             } else if (ks.getCharacter() == 'v') {
                 System.out.println(this.ql.getQuoteList().toString());
             }
