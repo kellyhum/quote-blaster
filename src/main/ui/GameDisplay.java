@@ -58,8 +58,6 @@ public class GameDisplay {
     // MODIFIES: this
     // EFFECTS: sets up the lanterna interface, ticks every 250 milliseconds
     public void setupGameConsole(QuoteList ql) throws IOException, InterruptedException {
-        WordBlock testBlock;
-        testBlock = new WordBlock("testBlock", 40, 5);
         System.out.println("Press s to save the current state of the game");
         System.out.println("Press l to load the last state of the game");
 
@@ -68,9 +66,6 @@ public class GameDisplay {
         game.setActiveQuote(new Quote("test quote", false));
         game.splitQuoteIntoWords(40, 10);
 
-        //this.activeWords = (ArrayList<WordBlock>) game.getActiveWords();
-        this.activeWords = new ArrayList<>();
-        this.activeWords.add(testBlock);
         this.ql = ql;
 
         screen = new DefaultTerminalFactory().createScreen();
@@ -88,14 +83,12 @@ public class GameDisplay {
     // EFFECTS: checks key commands, renders, and checks collisions
     public void tick() throws IOException {
         this.activeBullets = game.getActiveBullets();
-
-        this.activeWords.removeAll(game.getActiveWords()); // remove duplicates
-        this.activeWords.addAll(game.getActiveWords()); // add new words
+        this.activeWords = (ArrayList<WordBlock>) game.getActiveWords();
 
         game.update(middleOfScreen, playerYPos);
+        this.score = game.getScore();
 
         screen.clear();
-        //this.score = game.getScore();
         keyCommands();
         drawPlayer();
         drawBullets();
@@ -127,7 +120,7 @@ public class GameDisplay {
             } else if (ks.getCharacter() == 'l') {
                 this.ql = reader.readQuoteList();
                 this.score = reader.readAndParseScore();
-                this.activeWords = reader.readWordList();
+                game.setActiveWords(reader.readWordList());
             } else if (ks.getCharacter() == 'v') {
                 System.out.println(this.ql.getQuoteList().toString());
             }
