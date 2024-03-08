@@ -2,6 +2,8 @@ package model;
 
 import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
@@ -188,5 +190,15 @@ public class GameTest {
     @Test
     public void getActiveBullets() {
         assertEquals(0, g.getActiveBullets().size());
+    }
+
+    @Test
+    public void setWordsTest() {
+        WordBlock b2 = new WordBlock("word2", 5, 10);
+        ArrayList<WordBlock> j = new ArrayList<>();
+        j.add(b2);
+
+        g.setActiveWords(j);
+        assertEquals(j, g.getActiveWords());
     }
 }
