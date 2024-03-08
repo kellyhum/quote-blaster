@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /* displays the quote list and quotes */
 
 public class QuoteDisplay {
-    private static final String JSON_FILE = "./data/test.json";
+    private static final String JSON_QUOTE = "./data/quoteList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private QuoteList quoteList;
@@ -24,8 +24,7 @@ public class QuoteDisplay {
     public QuoteDisplay() {
         quoteList = new QuoteList();
         scan = new Scanner(System.in);
-        jsonWriter = new JsonWriter(JSON_FILE);
-        jsonReader = new JsonReader(JSON_FILE);
+        jsonReader = new JsonReader("", JSON_QUOTE);
         startGame = false;
     }
 
@@ -50,7 +49,6 @@ public class QuoteDisplay {
     // EFFECTS: asks for user input
     public boolean quoteCommands() {
         System.out.println("\nPress A to add a new quote");
-        System.out.println("Press S to save the current quotelist");
         System.out.println("Press L to load the previous quotelist");
         System.out.println("Press V to view the quotelist");
         System.out.println("Press B to run the game");
@@ -92,9 +90,6 @@ public class QuoteDisplay {
 
             printQuotes();
             quoteCommands();
-        } else if (u.equals("S")) {
-            saveQuoteList();
-            quoteCommands();
         } else if (u.equals("L")) {
             loadQuoteList();
             quoteCommands();
@@ -107,23 +102,12 @@ public class QuoteDisplay {
         }
     }
 
-    public void saveQuoteList() {
-        try {
-            jsonWriter.open();
-            jsonWriter.writeQuoteList(quoteList);
-            jsonWriter.close();
-            System.out.println("Saved to " + JSON_FILE);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_FILE);
-        }
-    }
-
     public void loadQuoteList() {
         try {
             this.quoteList = jsonReader.readQuoteList();
-            System.out.println("Loaded from " + JSON_FILE);
+            System.out.println("Loaded from " + JSON_QUOTE);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_FILE);
+            System.out.println("Unable to read from file: " + JSON_QUOTE);
         }
     }
 
