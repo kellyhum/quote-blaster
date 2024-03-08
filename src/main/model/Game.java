@@ -88,7 +88,8 @@ public class Game {
         String[] splitQuote = this.activeQuote.getQuoteText().split(" ");
 
         for (String s : splitQuote) {
-            int randomXPos = random.nextInt(width);
+            int randomXPos = 40; // TESTING PURPOSES ONLY
+            //int randomXPos = random.nextInt(width);
             int randomYPos = random.nextInt(height);
 
             activeWords.add(new WordBlock(s, randomXPos, randomYPos));
@@ -118,6 +119,10 @@ public class Game {
 
     public List<WordBlock> getActiveWords() {
         return activeWords;
+    }
+
+    public void setActiveWords(ArrayList<WordBlock> a) {
+        activeWords = a;
     }
 
     public int getScore() {
