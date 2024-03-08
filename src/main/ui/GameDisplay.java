@@ -33,7 +33,6 @@ public class GameDisplay {
     private int score;
     private QuoteList ql;
 
-
     private JsonWriter writer;
     private JsonWriter writerQuote;
     private JsonReader reader;
@@ -97,8 +96,9 @@ public class GameDisplay {
         screen.refresh();
     }
 
-    // MODIFIES: game
-    // EFFECTS: checks for user input. if space was pressed, make a new Bullet object
+    // MODIFIES: this, game
+    // EFFECTS: checks for user input. if space was pressed, make a new Bullet object; s to save; l to load;
+    // v to print the quote list
     public void keyCommands() throws IOException {
         KeyStroke ks = screen.pollInput();
 

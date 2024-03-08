@@ -12,13 +12,12 @@ import java.util.ArrayList;
 /* displays the quote list and quotes */
 public class QuoteDisplay {
     private static final String JSON_QUOTE = "./data/quoteList.json";
-    private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private QuoteList quoteList;
     private final Scanner scan;
     private boolean startGame;
 
-    // EFFECTS: intiialize Scanner, empty QuoteList, and both JsonWriter and JsonReader
+    // EFFECTS: initialize Scanner, empty QuoteList, and both JsonWriter and JsonReader
     public QuoteDisplay() {
         quoteList = new QuoteList();
         scan = new Scanner(System.in);
@@ -71,7 +70,7 @@ public class QuoteDisplay {
         return null;
     }
 
-    // EFFECTS: if user clicks a, add a new quote; l, load prior version; v, print quotelist; b, startgame
+    // EFFECTS: if user clicks a, add a new quote; l, load prior version; v, print quote list; b, start the game
     public void checkUserCommand(String u) {
         if (u.equals("A")) {
             System.out.println("Enter your new quote here:");

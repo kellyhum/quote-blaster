@@ -24,7 +24,7 @@ public class JsonReader {
     private String sourceGame;
     private String sourceQuote;
 
-    // EFECTS: initializes a JsonReader object with sourceGame and sourceQuote fields set to the parameter inputs
+    // EFFECTS: initializes a JsonReader object with sourceGame and sourceQuote fields set to the parameter inputs
     public JsonReader(String sourceGame, String sourceQuote) {
         this.sourceGame = sourceGame;
         this.sourceQuote = sourceQuote;
@@ -69,6 +69,7 @@ public class JsonReader {
         return ql;
     }
 
+    // MODIFIES: ql
     // EFFECTS: converts the quote jsons into Java, adds to the quotelist
     private void addQuoteToQuoteList(QuoteList ql, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("quoteDisplay");
@@ -78,6 +79,7 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: ql
     // EFFECTS: parses the string data for the quote, makes a new quote and adds to the quotelist
     private void initializeQuote(JSONObject jsonObject, QuoteList ql) {
         String name = jsonObject.getString("quote");
@@ -94,6 +96,7 @@ public class JsonReader {
         return wl;
     }
 
+    // MODIFIES: wb
     // EFFECTS: loops through each word object in the json, initializes the word using the other method
     private void addWordToWordList(ArrayList<WordBlock> wb, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("words");
@@ -103,6 +106,7 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: wb
     // EFFECTS: pulls the data for a WordBlock from the json, makes a new WordBlock and appends into list
     private void initializeWord(JSONObject jsonObject, ArrayList<WordBlock> wb) {
         String word = jsonObject.getString("word");

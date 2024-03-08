@@ -28,7 +28,25 @@ public class WordBlock {
         return json;
     }
 
-    // getters and setters
+    // MODIFIES: this
+    // EFFECTS: sets the x1 field to the parameter value
+    public void setX(int x1) {
+        this.x1 = x1;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the y1 field to the parameter value
+    public void setY(int y) {
+        this.y1 = y;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the hit field to the parameter value
+    public void setHit(boolean b) {
+        hit = b;
+    }
+
+    // getters
     public String getWord() {
         return this.word;
     }
@@ -41,19 +59,7 @@ public class WordBlock {
         return this.y1;
     }
 
-    public void setX(int x1) {
-        this.x1 = x1;
-    }
-
-    public void setY(int y) {
-        this.y1 = y;
-    }
-
     public boolean getHit() {
         return hit;
-    }
-
-    public void setHit(boolean b) {
-        hit = b;
     }
 }

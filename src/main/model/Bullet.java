@@ -18,20 +18,24 @@ public class Bullet {
         y1--; // minus 1 b/c of the screen position (++ is down, -- is up)
     }
 
-    // getters and setters
+    // MODIFIES: this
+    // EFFECTS: changes the y value to the parameter
+    public void setY(int y) {
+        this.y1 = y;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the x value to the parameter
+    public void setX(int x) {
+        this.x1 = x;
+    }
+
+    // getters
     public int getX() {
         return x1;
     }
 
     public int getY() {
         return y1;
-    }
-
-    public void setY(int y) {
-        this.y1 = y;
-    }
-
-    public void setX(int x) {
-        this.x1 = x;
     }
 }

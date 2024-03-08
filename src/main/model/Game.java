@@ -108,11 +108,25 @@ public class Game {
         score++;
     }
 
-    // getters and setters
+    // MODIFIES: this
+    // EFFECTS: sets the active quote field to the parameter value
     public void setActiveQuote(Quote q) {
         this.activeQuote = q;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the active words field to the parameter value
+    public void setActiveWords(ArrayList<WordBlock> a) {
+        activeWords = a;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the spacebar field to true
+    public void setSpaceBarPressed() {
+        spaceBarPressed = true;
+    }
+
+    // getters
     public Quote getActiveQuote() {
         return activeQuote;
     }
@@ -121,20 +135,12 @@ public class Game {
         return activeWords;
     }
 
-    public void setActiveWords(ArrayList<WordBlock> a) {
-        activeWords = a;
-    }
-
     public int getScore() {
         return score;
     }
 
     public boolean getSpaceBarPressed() {
         return spaceBarPressed;
-    }
-
-    public void setSpaceBarPressed() {
-        spaceBarPressed = true;
     }
 
     public ArrayList<Bullet> getActiveBullets() {
