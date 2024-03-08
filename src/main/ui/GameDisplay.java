@@ -20,8 +20,8 @@ import java.io.IOException;
 /* holds all the console commands that show up on screen,
 * also initiates the Lanterna game console */
 public class GameDisplay {
-    private static final String JSON_FILE = "./data/testGame.json";
-    private static final String JSON_QUOTE = "./data/test.json";
+    private static final String JSON_FILE = "./data/game.json";
+    private static final String JSON_QUOTE = "./data/quoteList.json";
 
     private Screen screen;
     private Game game;
@@ -37,14 +37,12 @@ public class GameDisplay {
     private JsonWriter writer;
     private JsonWriter writerQuote;
     private JsonReader reader;
-    private JsonReader readerQuote;
 
     // EFFECTS: constructs a new GameDisplay object
     public void setupTextConsole() throws IOException, InterruptedException {
         writer = new JsonWriter(JSON_FILE);
         writerQuote = new JsonWriter(JSON_QUOTE);
-        reader = new JsonReader(JSON_FILE);
-        readerQuote = new JsonReader(JSON_QUOTE);
+        reader = new JsonReader(JSON_FILE, JSON_QUOTE);
 
         checkUserCommand();
     }
@@ -127,7 +125,7 @@ public class GameDisplay {
                 writerQuote.close();
                 System.out.println("saved");
             } else if (ks.getCharacter() == 'l') {
-                this.ql = readerQuote.readQuoteList();
+                this.ql = reader.readQuoteList();
                 this.score = reader.readAndParseScore();
                 this.activeWords = reader.readWordList();
             } else if (ks.getCharacter() == 'v') {
