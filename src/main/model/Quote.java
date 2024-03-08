@@ -29,6 +29,7 @@ public class Quote {
         this.isTheCurrentLevel = !this.isTheCurrentLevel;
     }
 
+    // EFFECTS: makes a new JSON object with "quote" and "isCurrLevel" keys, values of the Quote
     public JSONObject convertToJson() {
         JSONObject json = new JSONObject();
         json.put("quote", quoteText);

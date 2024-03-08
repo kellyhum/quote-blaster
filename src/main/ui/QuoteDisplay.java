@@ -5,13 +5,11 @@ import model.QuoteList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 /* displays the quote list and quotes */
-
 public class QuoteDisplay {
     private static final String JSON_QUOTE = "./data/quoteList.json";
     private JsonWriter jsonWriter;
@@ -73,7 +71,7 @@ public class QuoteDisplay {
         return null;
     }
 
-    // EFFECTS: if user clicks a, let them add a new quote
+    // EFFECTS: if user clicks a, add a new quote; l, load prior version; v, print quotelist; b, startgame
     public void checkUserCommand(String u) {
         if (u.equals("A")) {
             System.out.println("Enter your new quote here:");
@@ -97,11 +95,11 @@ public class QuoteDisplay {
             printQuotes();
             quoteCommands();
         } else if (u.equals("B")) {
-            //return;
             startGame = true;
         }
     }
 
+    // EFFECTS: read the quoteList from the json file and print "loaded from [file]", catch IOexception
     public void loadQuoteList() {
         try {
             this.quoteList = jsonReader.readQuoteList();

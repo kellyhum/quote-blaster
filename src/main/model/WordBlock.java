@@ -19,6 +19,7 @@ public class WordBlock {
         this.hit = false;
     }
 
+    // EFFECTS: makes a new json object that has the same parameters as a wordBlock
     public JSONObject convertToJson() {
         JSONObject json = new JSONObject();
         json.put("word", word);

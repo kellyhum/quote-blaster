@@ -17,6 +17,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+/*
+    converts JSON into Java code
+ */
 public class JsonReader {
     private String sourceGame;
     private String sourceQuote;
