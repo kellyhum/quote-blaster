@@ -1,3 +1,7 @@
+/*
+    Code referenced from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+ */
+
 package persistence;
 
 import model.Quote;
@@ -24,13 +28,6 @@ public class JsonWriter {
         printer = new PrintWriter(destPath);
     }
 
-//    public void writeAll(QuoteList ql, int score, ArrayList<WordBlock> wb) {
-//        JSONArray mainArray = new JSONArray();
-//        mainArray.put(writeQuoteList(ql));
-//
-//        mainArray.put(writeGameStats(score, wb));
-//    }
-
     public void writeQuoteList(QuoteList quoteList) {
         JSONArray quoteArray = new JSONArray();
         JSONObject mainElement = new JSONObject();
@@ -40,10 +37,8 @@ public class JsonWriter {
             quoteArray.put(quote); // add to array
         }
 
-        // need to add to the MAIN json object!
         mainElement.put("quoteDisplay", quoteArray);
 
-        // convert array to string, print the output
         printer.print(mainElement.toString(TAB));
     }
 
