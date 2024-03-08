@@ -1,4 +1,10 @@
-{"quoteDisplay": [{
-    "quote": "test",
-    "isCurrLevel": false
-}]}
+{"quoteDisplay": [
+    {
+        "quote": "test",
+        "isCurrLevel": false
+    },
+    {
+        "quote": "pls work",
+        "isCurrLevel": false
+    }
+]}
