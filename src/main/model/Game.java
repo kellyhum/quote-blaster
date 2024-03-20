@@ -138,7 +138,7 @@ public class Game {
         } else if (keyCode == KeyEvent.VK_L) {
             activeQuoteList = reader.readQuoteList();
             score = reader.readAndParseScore();
-            System.out.println("loaded");
+            System.out.println("test change");
         }
     }
 
