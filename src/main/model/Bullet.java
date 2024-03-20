@@ -15,7 +15,7 @@ public class Bullet {
     // MODIFIES: this
     // EFFECTS: moves the bullet every clock tick
     public void move() {
-        y1--; // minus 1 b/c of the screen position (++ is down, -- is up)
+        y1 -= 5; // minus 1 b/c of the screen position (++ is down, -- is up)
     }
 
     // MODIFIES: this

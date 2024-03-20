@@ -72,10 +72,12 @@ public class JsonReader {
     // MODIFIES: ql
     // EFFECTS: converts the quote jsons into Java, adds to the quotelist
     private void addQuoteToQuoteList(QuoteList ql, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("quoteDisplay");
-        for (Object json : jsonArray) {
-            JSONObject nextQuote = (JSONObject) json; // convert to json object
-            initializeQuote(nextQuote, ql); // add quote to the quotelist
+        if (jsonObject.length() != 0) {
+            JSONArray jsonArray = jsonObject.getJSONArray("quoteDisplay");
+            for (Object json : jsonArray) {
+                JSONObject nextQuote = (JSONObject) json; // convert to json object
+                initializeQuote(nextQuote, ql); // add quote to the quotelist
+            }
         }
     }
 

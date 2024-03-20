@@ -4,17 +4,43 @@ package model;
    primarily for setup, updating and changing values
 */
 
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+    private static final String JSON_FILE = "./data/game.json";
+    private static final String JSON_QUOTE = "./data/quoteList.json";
+
     private int score;
     private boolean spaceBarPressed;
+
     private ArrayList<Bullet> activeBullets;
     private Quote activeQuote;
     private ArrayList<WordBlock> activeWords;
+    private QuoteList activeQuoteList;
+
     private Random random;
+
+    private JsonWriter writer;
+    private JsonWriter writerQuote;
+    private JsonReader reader;
+
+    public Game() {
+        writer = new JsonWriter(JSON_FILE);
+        writerQuote = new JsonWriter(JSON_QUOTE);
+        reader = new JsonReader(JSON_FILE, JSON_QUOTE);
+        setup();
+    }
 
     // MODIFIES: this
     // EFFECTS: initializes player, space bar, quote, words, random, and score
@@ -61,12 +87,14 @@ public class Game {
     public void bulletWordCollision() {
         for (Bullet b : activeBullets) {
             for (WordBlock w : activeWords) {
-                if (((b.getY() == w.getY()) && (b.getX() == w.getX()))) {
+                // is there a way to make the if condition better?
+                if (new Rectangle(b.getX(), b.getY(), 10, 10).intersects(new Rectangle(w.getX(), w.getY(), 15, 15))) {
                     if (!w.getHit()) {
                         incScore();
                         w.setHit(true);
                     }
                 }
+//                if (((b.getY() == w.getY()) && (b.getX() == w.getX())))
             }
         }
     }
@@ -88,11 +116,29 @@ public class Game {
         String[] splitQuote = this.activeQuote.getQuoteText().split(" ");
 
         for (String s : splitQuote) {
-            int randomXPos = 40; // TESTING PURPOSES ONLY
+            int randomXPos = WIDTH / 2 + 5; // TESTING PURPOSES ONLY
             //int randomXPos = random.nextInt(width);
             int randomYPos = random.nextInt(height);
 
             activeWords.add(new WordBlock(s, randomXPos, randomYPos));
+        }
+    }
+
+    public void keyPressed(int keyCode) throws IOException {
+        if (keyCode == KeyEvent.VK_SPACE) {
+            setSpaceBarPressed();
+        } else if (keyCode == KeyEvent.VK_S) {
+            writer.open();
+            writerQuote.open();
+            writer.writeGameStats(this.score, this.activeWords);
+            writerQuote.writeQuoteList(activeQuoteList);
+            writer.close();
+            writerQuote.close();
+            System.out.println("saved");
+        } else if (keyCode == KeyEvent.VK_L) {
+            activeQuoteList = reader.readQuoteList();
+            score = reader.readAndParseScore();
+            System.out.println("loaded");
         }
     }
 
@@ -124,6 +170,10 @@ public class Game {
     // EFFECTS: sets the spacebar field to true
     public void setSpaceBarPressed() {
         spaceBarPressed = true;
+    }
+
+    public void setActiveQuoteList(QuoteList q) {
+        activeQuoteList = q;
     }
 
     // getters

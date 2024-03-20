@@ -37,12 +37,15 @@ public class JsonWriter {
         JSONArray quoteArray = new JSONArray();
         JSONObject mainElement = new JSONObject();
 
-        for (Quote q : quoteList.getQuoteList()) {
-            JSONObject quote = q.convertToJson();
-            quoteArray.put(quote); // add to array
+        if (!(quoteList == null)) {
+            for (Quote q : quoteList.getQuoteList()) {
+                JSONObject quote = q.convertToJson();
+                quoteArray.put(quote); // add to array
+            }
+
+            mainElement.put("quoteDisplay", quoteArray);
         }
 
-        mainElement.put("quoteDisplay", quoteArray);
 
         printer.print(mainElement.toString(TAB));
     }
