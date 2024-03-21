@@ -57,7 +57,7 @@ public class GameTest {
     public void updateBulletTest() {
         g.setSpaceBarPressed();
         g.initializeBullet(2, 2);
-        g.updateBullet();
+        g.updateBulletAndWords();
 
         assertEquals(2, g.getActiveBullets().get(0).getX());
         assertEquals(1, g.getActiveBullets().get(0).getY());
@@ -70,8 +70,8 @@ public class GameTest {
 
         assertEquals(1, g.getActiveBullets().size());
 
-        g.updateBullet();
-        g.removeOffScreenBullets();
+        g.updateBulletAndWords();
+        g.removeOffScreenBulletsAndWords();
 
         assertEquals(0, g.getActiveBullets().size());
     }
