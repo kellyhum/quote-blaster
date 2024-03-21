@@ -18,7 +18,7 @@ public class JsonWriterTest extends JsonTest {
     @Test
     public void testInvalidFile() {
         try {
-            Quote q = new Quote("test quote", false);
+            Quote q = new Quote("test quote");
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -31,7 +31,7 @@ public class JsonWriterTest extends JsonTest {
     public void testWriteQuoteList() {
         try {
             QuoteList ql = new QuoteList();
-            ql.addQuote(new Quote("test", true));
+            ql.addQuote(new Quote("test"));
 
             JsonWriter writer = new JsonWriter("./data/emptyQuoteListWriter.json");
             writer.open();
@@ -42,7 +42,7 @@ public class JsonWriterTest extends JsonTest {
             QuoteList ql2 = reader.readQuoteList();
             assertFalse(ql2.getQuoteList().isEmpty());
             assertEquals(1, ql2.getQuoteList().size());
-            checkQuoteValues("test", true, ql2.getQuoteList().get(0));
+            checkQuoteValues("test", ql2.getQuoteList().get(0));
 
         } catch (IOException e) {
             fail("should not have been thrown");

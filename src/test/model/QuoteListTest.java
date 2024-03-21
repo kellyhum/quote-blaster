@@ -10,7 +10,7 @@ public class QuoteListTest {
     @BeforeEach
     public void setup() {
         q = new QuoteList();
-        quote = new Quote("test", false);
+        quote = new Quote("test");
     }
 
     @Test

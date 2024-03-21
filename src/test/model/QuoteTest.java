@@ -8,12 +8,11 @@ public class QuoteTest {
 
     @BeforeEach
     public void setup() {
-        q = new Quote("test", false);
+        q = new Quote("test");
     }
 
     @Test
     public void quoteTest() {
-        assertFalse(q.getTheCurrentLevel());
         assertEquals("test", q.getQuoteText());
     }
 
@@ -21,14 +20,5 @@ public class QuoteTest {
     public void setDeleteQuoteTest() {
         q.setDeleteQuote();
         assertTrue(q.getDeleteQuote());
-    }
-
-    @Test
-    public void setIsTheCurrentLevelTest() {
-        q.setIsTheCurrentLevel();
-        assertTrue(q.getTheCurrentLevel());
-
-        q.setIsTheCurrentLevel();
-        assertFalse(q.getTheCurrentLevel());
     }
 }

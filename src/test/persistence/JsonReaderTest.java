@@ -69,8 +69,8 @@ public class JsonReaderTest extends JsonTest {
             QuoteList ql = reader.readQuoteList();
             assertFalse(ql.getQuoteList().isEmpty());
             assertEquals(2, ql.getQuoteList().size());
-            checkQuoteValues("lkjlkj", false, ql.getQuoteList().get(0));
-            checkQuoteValues("lk", true, ql.getQuoteList().get(1));
+            checkQuoteValues("lkjlkj", ql.getQuoteList().get(0));
+            checkQuoteValues("lk", ql.getQuoteList().get(1));
         } catch (IOException e) {
             fail("not supposed to throw");
         }

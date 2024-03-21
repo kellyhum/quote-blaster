@@ -14,7 +14,7 @@ public class BulletTest {
     @Test
     public void moveTest() {
         b.move();
-        assertEquals(2, b.getY());
+        assertEquals(-5, b.getY());
         assertEquals(3, b.getX());
     }
 

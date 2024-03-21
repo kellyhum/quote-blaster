@@ -10,13 +10,8 @@ import model.WordBlock;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonTest {
-    protected void checkQuoteValues(String desc, Boolean lvl, Quote q) {
+    protected void checkQuoteValues(String desc, Quote q) {
         assertEquals(desc, q.getQuoteText());
-        if (lvl) {
-            assertTrue(q.getTheCurrentLevel());
-        } else {
-            assertFalse(q.getTheCurrentLevel());
-        }
     }
 
     protected void checkWordValues(String desc, int x, int y, WordBlock w) {

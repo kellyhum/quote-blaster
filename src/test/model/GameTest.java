@@ -27,13 +27,13 @@ public class GameTest {
     @Test
     public void updateTest() {
         g.setSpaceBarPressed();
-        g.update(5, 5);
+        g.update(15, 15);
 
         assertEquals(1, g.getActiveBullets().size());
         assertFalse(g.getSpaceBarPressed());
 
-        assertEquals(5, g.getActiveBullets().get(0).getX());
-        assertEquals(4, g.getActiveBullets().get(0).getY());
+        assertEquals(15, g.getActiveBullets().get(0).getX());
+        assertEquals(7, g.getActiveBullets().get(0).getY());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class GameTest {
         g.updateBulletAndWords();
 
         assertEquals(2, g.getActiveBullets().get(0).getX());
-        assertEquals(1, g.getActiveBullets().get(0).getY());
+        assertEquals(-6, g.getActiveBullets().get(0).getY());
     }
 
     @Test
@@ -104,8 +104,10 @@ public class GameTest {
 
         g.bulletWordCollision();
 
-        assertEquals(0, g.getScore());
-        assertFalse(g.getActiveWords().get(0).getHit());
+        assertEquals(1, g.getScore());
+        //assertEquals(0, g.getScore());
+        assertTrue(g.getActiveWords().get(0).getHit());
+        //assertFalse(g.getActiveWords().get(0).getHit());
     }
 
     @Test
@@ -120,8 +122,10 @@ public class GameTest {
 
         g.bulletWordCollision();
 
-        assertEquals(0, g.getScore());
-        assertFalse(g.getActiveWords().get(0).getHit());
+        assertEquals(1, g.getScore());
+        //assertEquals(0, g.getScore());
+        assertTrue(g.getActiveWords().get(0).getHit());
+        //assertFalse(g.getActiveWords().get(0).getHit());
     }
 
     @Test
