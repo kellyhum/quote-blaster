@@ -85,9 +85,9 @@ public class JsonReader {
     // EFFECTS: parses the string data for the quote, makes a new quote and adds to the quotelist
     private void initializeQuote(JSONObject jsonObject, QuoteList ql) {
         String name = jsonObject.getString("quote");
-        Boolean isCurrLevel = jsonObject.getBoolean("isCurrLevel");
+        //Boolean isCurrLevel = jsonObject.getBoolean("isCurrLevel");
 
-        Quote q = new Quote(name, isCurrLevel);
+        Quote q = new Quote(name);
         ql.addQuote(q);
     }
 
