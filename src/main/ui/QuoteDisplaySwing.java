@@ -19,10 +19,7 @@ public class QuoteDisplaySwing extends JOptionPane {
         String generalInstructions = "Add quotes, chose a quote, or view the list";
         String[] buttons = {"Add quote", "Choose a quote", "View the list"};
 
-        int result = showOptionDialog(null, generalInstructions, "Change the quote", 0, 3, null,
-                buttons,
-                buttons[0]
-        );
+        int result = showOptionDialog(null, generalInstructions, "Change the quote", 0, 3, null, buttons, buttons[0]);
 
         if (result == 0) { // add quote
             String quoteInput = showInputDialog("enter a new quote");
@@ -32,8 +29,7 @@ public class QuoteDisplaySwing extends JOptionPane {
 
         } else if (result == 1) { // choose a quote
             String quoteInput = showInputDialog(
-                    "the current playable quotes are\n"
-                            + displayQuoteListAsString()
+                    "the current playable quotes are\n" + displayQuoteListAsString()
                             + "\nenter the number of the quote you want to play");
             int quoteInputInteger = Integer.parseInt(quoteInput);
             activeQuote = ql.getQuoteAtIndex(quoteInputInteger);
