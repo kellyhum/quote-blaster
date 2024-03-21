@@ -9,7 +9,6 @@ import persistence.JsonWriter;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
 import java.util.ArrayList;
@@ -50,6 +49,7 @@ public class Game {
         activeBullets = new ArrayList<>();
         activeQuote = null;
         activeWords = new ArrayList<>();
+        activeQuoteList = new QuoteList();
         random = new Random();
     }
 
@@ -57,9 +57,9 @@ public class Game {
     // EFFECTS: updates the game every interval
     public void update(int x, int y) {
         initializeBullet(x, y);
-        updateBullet();
+        updateBulletAndWords();
         bulletWordCollision();
-        removeOffScreenBullets();
+        removeOffScreenBulletsAndWords();
     }
 
     // MODIFIES: this
@@ -75,9 +75,13 @@ public class Game {
 
     // MODIFIES: this
     // EFFECTS: moves the bullets up every tick
-    public void updateBullet() {
+    public void updateBulletAndWords() {
         for (Bullet b : activeBullets) {
             b.move();
+        }
+
+        for (WordBlock w : activeWords) {
+            w.move();
         }
     }
 
@@ -101,10 +105,16 @@ public class Game {
 
     // MODIFIES: this
     // EFFECTS: removes the bullets when they go past the screen boundaries
-    public void removeOffScreenBullets() {
+    public void removeOffScreenBulletsAndWords() {
         for (int i = 0; i < activeBullets.size(); i++) {
             if (activeBullets.get(i).getY() < 0) {
                 activeBullets.remove(activeBullets.get(i));
+            }
+        }
+
+        for (int i = 0; i < activeWords.size(); i++) {
+            if (activeWords.get(i).getY() > HEIGHT) {
+                activeWords.remove(activeWords.get(i));
             }
         }
     }
@@ -116,8 +126,8 @@ public class Game {
         String[] splitQuote = this.activeQuote.getQuoteText().split(" ");
 
         for (String s : splitQuote) {
-            int randomXPos = WIDTH / 2 + 5; // TESTING PURPOSES ONLY
-            //int randomXPos = random.nextInt(width);
+            //int randomXPos = WIDTH / 2 + 5; // TESTING PURPOSES ONLY
+            int randomXPos = random.nextInt(width);
             int randomYPos = random.nextInt(height);
 
             activeWords.add(new WordBlock(s, randomXPos, randomYPos));
@@ -137,8 +147,8 @@ public class Game {
             System.out.println("saved");
         } else if (keyCode == KeyEvent.VK_L) {
             activeQuoteList = reader.readQuoteList();
+            activeWords = reader.readWordList();
             score = reader.readAndParseScore();
-            System.out.println("test change");
         }
     }
 
@@ -154,8 +164,15 @@ public class Game {
         score++;
     }
 
+    public void refreshActiveWords(Quote q) {
+        setActiveWords(new ArrayList<>()); // reset active words to empty
+        setActiveQuote(q);
+        splitQuoteIntoWords(WIDTH, HEIGHT - 200);
+    }
+
     // MODIFIES: this
-    // EFFECTS: sets the active quote field to the parameter value
+    // EFFECTS: sets the active quote field to the parameter value and
+    // calls the splitQuoteIntoWords function
     public void setActiveQuote(Quote q) {
         this.activeQuote = q;
     }
@@ -172,11 +189,15 @@ public class Game {
         spaceBarPressed = true;
     }
 
-    public void setActiveQuoteList(QuoteList q) {
-        activeQuoteList = q;
+    public void addToActiveQuoteList(Quote q) {
+        activeQuoteList.addQuote(q);
     }
 
     // getters
+    public QuoteList getActiveQuoteList() {
+        return activeQuoteList;
+    }
+
     public Quote getActiveQuote() {
         return activeQuote;
     }
