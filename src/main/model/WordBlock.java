@@ -46,6 +46,12 @@ public class WordBlock {
         hit = b;
     }
 
+    // MODIFIES: this
+    // EFFECTS: moves the word every clock tick
+    public void move() {
+        y1 += 10; // plus 1 b/c of the screen position (++ is down, -- is up)
+    }
+
     // getters
     public String getWord() {
         return this.word;
