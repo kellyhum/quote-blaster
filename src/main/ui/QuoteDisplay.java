@@ -38,7 +38,7 @@ public class QuoteDisplay {
         for (Quote q : quoteList.getQuoteList()) {
             System.out.print(q.getQuoteText());
             System.out.print(", ");
-            System.out.print(q.getTheCurrentLevel());
+            //System.out.print(q.getTheCurrentLevel());
             System.out.println();
         }
     }
@@ -60,15 +60,15 @@ public class QuoteDisplay {
     }
 
     // EFFECTS: returns the quote that has currentLevel = true
-    public Quote determineCurrentQuote(ArrayList<Quote> ql) {
-        for (Quote q : ql) {
-            if (q.getTheCurrentLevel()) {
-                return q;
-            }
-        }
-
-        return null;
-    }
+//    public Quote determineCurrentQuote(ArrayList<Quote> ql) {
+//        for (Quote q : ql) {
+//            if (q.getTheCurrentLevel()) {
+//                return q;
+//            }
+//        }
+//
+//        return null;
+//    }
 
     // EFFECTS: if user clicks a, add a new quote; l, load prior version; v, print quote list; b, start the game
     public void checkUserCommand(String u) {
@@ -81,7 +81,7 @@ public class QuoteDisplay {
 
             scan.nextLine();
 
-            Quote q = new Quote(userQuote, userPlay);
+            Quote q = new Quote(userQuote);
 
             quoteList.addQuote(q);
 

@@ -62,7 +62,7 @@ public class GameDisplay {
 
         game = new Game();
         game.setup();
-        game.setActiveQuote(new Quote("test quote", false));
+        game.setActiveQuote(new Quote("test quote"));
         game.splitQuoteIntoWords(40, 10);
 
         this.ql = ql;
