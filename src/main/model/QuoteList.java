@@ -18,6 +18,10 @@ public class QuoteList {
         quoteList.add(q);
     }
 
+    public Quote getQuoteAtIndex(int index) {
+        return quoteList.get(index);
+    }
+
     // getter
     public ArrayList<Quote> getQuoteList() {
         return quoteList;
