@@ -1,15 +1,4 @@
 {
-    "score": 2,
-    "words": [
-        {
-            "x": 405,
-            "y": 308,
-            "word": "test"
-        },
-        {
-            "x": 405,
-            "y": 313,
-            "word": "quote"
-        }
-    ]
+    "score": 0,
+    "words": []
 }
