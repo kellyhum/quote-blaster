@@ -18,9 +18,6 @@ public class GamePrimary extends JFrame {
         super("Project Starter");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game = new Game();
-        // testing purposes
-        game.setActiveQuote(new Quote("test quote", false));
-        game.splitQuoteIntoWords(game.WIDTH, game.HEIGHT - 200);
 
         gameDisplay = new GameDisplaySwing(game);
         scoreDisplay = new ScoreDisplaySwing(game);
