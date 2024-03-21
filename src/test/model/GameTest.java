@@ -143,7 +143,7 @@ public class GameTest {
 
     @Test
     public void splitQuoteTest() {
-        g.setActiveQuote(new Quote("test quote", false));
+        g.setActiveQuote(new Quote("test quote"));
         g.splitQuoteIntoWords(4, 3);
 
         assertEquals(2, g.getActiveWords().size());
@@ -164,7 +164,7 @@ public class GameTest {
 
     @Test
     public void setCurrentQuoteTest() {
-        Quote k = new Quote("another test", false);
+        Quote k = new Quote("another test");
         g.setActiveQuote(k);
 
         assertEquals(k, g.getActiveQuote());
