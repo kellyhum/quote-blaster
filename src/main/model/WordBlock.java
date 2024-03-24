@@ -29,6 +29,12 @@ public class WordBlock {
     }
 
     // MODIFIES: this
+    // EFFECTS: moves the word every clock tick
+    public void move() {
+        y1 += 5; // plus b/c of the screen position (++ is down, -- is up)
+    }
+
+    // MODIFIES: this
     // EFFECTS: sets the x1 field to the parameter value
     public void setX(int x1) {
         this.x1 = x1;
@@ -44,12 +50,6 @@ public class WordBlock {
     // EFFECTS: sets the hit field to the parameter value
     public void setHit(boolean b) {
         hit = b;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: moves the word every clock tick
-    public void move() {
-        y1 += 10; // plus 1 b/c of the screen position (++ is down, -- is up)
     }
 
     // getters

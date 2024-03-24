@@ -32,7 +32,7 @@ public class JsonWriter {
         printer = new PrintWriter(destPath);
     }
 
-    // EFFECTS: converts the Quotelist into JSON, puts the JSON into the file
+    // EFFECTS: converts the quote list into JSON, puts the JSON into the file
     public void writeQuoteList(QuoteList quoteList) {
         JSONArray quoteArray = new JSONArray();
         JSONObject mainElement = new JSONObject();

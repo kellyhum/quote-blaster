@@ -41,7 +41,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses the quotelist from the file and returns the java QuoteList object
+    // EFFECTS: parses the quote list from the file and returns the java QuoteList object
     public QuoteList readQuoteList() throws IOException {
         String jsonData = readFile(sourceQuote);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -70,19 +70,19 @@ public class JsonReader {
     }
 
     // MODIFIES: ql
-    // EFFECTS: converts the quote jsons into Java, adds to the quotelist
+    // EFFECTS: converts the quote jsons into Java, adds to the quote list
     private void addQuoteToQuoteList(QuoteList ql, JSONObject jsonObject) {
         if (jsonObject.length() != 0) {
             JSONArray jsonArray = jsonObject.getJSONArray("quoteDisplay");
             for (Object json : jsonArray) {
                 JSONObject nextQuote = (JSONObject) json; // convert to json object
-                initializeQuote(nextQuote, ql); // add quote to the quotelist
+                initializeQuote(nextQuote, ql); // add quote to the quote list
             }
         }
     }
 
     // MODIFIES: ql
-    // EFFECTS: parses the string data for the quote, makes a new quote and adds to the quotelist
+    // EFFECTS: parses the string data for the quote, makes a new quote and adds to the quote list
     private void initializeQuote(JSONObject jsonObject, QuoteList ql) {
         String name = jsonObject.getString("quote");
         //Boolean isCurrLevel = jsonObject.getBoolean("isCurrLevel");
@@ -104,7 +104,7 @@ public class JsonReader {
         JSONArray jsonArray = jsonObject.getJSONArray("words");
         for (Object json : jsonArray) {
             JSONObject nextWord = (JSONObject) json; // convert to json object
-            initializeWord(nextWord, wb); // add quote to the quotelist
+            initializeWord(nextWord, wb); // add quote to the quote list
         }
     }
 

@@ -18,6 +18,8 @@ public class QuoteList {
         quoteList.add(q);
     }
 
+    // REQUITES: quoteList.size() >= 1
+    // EFFECTS: returns the quote at the specified index
     public Quote getQuoteAtIndex(int index) {
         return quoteList.get(index);
     }

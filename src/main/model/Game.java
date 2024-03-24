@@ -1,7 +1,10 @@
 package model;
 
-/* The main game mechanism class,
-   primarily for setup, updating and changing values
+/*
+    Code referenced from https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+
+    The main game mechanism class,
+    primarily for setup, updating and changing values
 */
 
 import persistence.JsonReader;
@@ -34,6 +37,8 @@ public class Game {
     private JsonWriter writerQuote;
     private JsonReader reader;
 
+    // EFFECTS: initializes a new Game object with JsonWriter and JsonReader objects. also
+    // calls the setup function
     public Game() {
         writer = new JsonWriter(JSON_FILE);
         writerQuote = new JsonWriter(JSON_QUOTE);
@@ -134,6 +139,11 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks whether the key was press, and executes commands based on the specific value
+    // if space was pressed, call the setSpaceBarPressed() method
+    // if S was pressed, save the score, words, and quote list
+    // if L was pressed, load the previous quote list, wordlist, and score
     public void keyPressed(int keyCode) throws IOException {
         if (keyCode == KeyEvent.VK_SPACE) {
             setSpaceBarPressed();
@@ -144,7 +154,6 @@ public class Game {
             writerQuote.writeQuoteList(activeQuoteList);
             writer.close();
             writerQuote.close();
-            System.out.println("saved");
         } else if (keyCode == KeyEvent.VK_L) {
             activeQuoteList = reader.readQuoteList();
             activeWords = reader.readWordList();
@@ -164,6 +173,9 @@ public class Game {
         score++;
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets active words to empty, sets the active quote, and
+    // calls the splitQuoteIntoWords function
     public void refreshActiveWords(Quote q) {
         setActiveWords(new ArrayList<>()); // reset active words to empty
         setActiveQuote(q);
@@ -189,6 +201,8 @@ public class Game {
         spaceBarPressed = true;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the quote list to the parameter value
     public void addToActiveQuoteList(Quote q) {
         activeQuoteList.addQuote(q);
     }
