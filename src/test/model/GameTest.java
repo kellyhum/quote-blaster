@@ -2,6 +2,9 @@ package model;
 
 import org.junit.jupiter.api.*;
 
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,14 +29,22 @@ public class GameTest {
 
     @Test
     public void updateTest() {
+        WordBlock testWord = new WordBlock("test", 2, 1);
+        ArrayList<WordBlock> testWords = new ArrayList<>();
+        testWords.add(testWord);
+
+        g.setActiveWords(testWords);
         g.setSpaceBarPressed();
         g.update(15, 15);
 
+        assertEquals(1, g.getActiveWords().size());
         assertEquals(1, g.getActiveBullets().size());
         assertFalse(g.getSpaceBarPressed());
 
         assertEquals(15, g.getActiveBullets().get(0).getX());
         assertEquals(7, g.getActiveBullets().get(0).getY());
+        assertEquals(2, g.getActiveWords().get(0).getX());
+        assertEquals(6, g.getActiveWords().get(0).getY());
     }
 
     @Test
@@ -65,15 +76,21 @@ public class GameTest {
 
     @Test
     public void removeOffScreenTest() {
+        ArrayList<WordBlock> testWords = new ArrayList<>();
+        testWords.add(new WordBlock("word", 0, 601));
+
         g.setSpaceBarPressed();
         g.initializeBullet(2, 0);
+        g.setActiveWords(testWords);
 
         assertEquals(1, g.getActiveBullets().size());
+        assertEquals(1, g.getActiveWords().size());
 
         g.updateBulletAndWords();
         g.removeOffScreenBulletsAndWords();
 
         assertEquals(0, g.getActiveBullets().size());
+        assertEquals(0, g.getActiveWords().size());
     }
 
     @Test
@@ -204,5 +221,62 @@ public class GameTest {
 
         g.setActiveWords(j);
         assertEquals(j, g.getActiveWords());
+    }
+
+    @Test
+    public void getActiveQuoteListTest() {
+        Quote temp = new Quote("test");
+        ArrayList<Quote> testQuote = new ArrayList<>();
+        testQuote.add(temp);
+
+        assertEquals(0, g.getActiveQuoteList().getQuoteList().size());
+
+        g.addToActiveQuoteList(temp);
+
+        assertEquals(testQuote, g.getActiveQuoteList().getQuoteList());
+    }
+
+    @Test
+    public void refreshWordsTest() {
+        Quote q = new Quote("test quote");
+        ArrayList<WordBlock> testWords = new ArrayList<>();
+        WordBlock w = new WordBlock("ta", 5, 5);
+        testWords.add(w);
+
+        g.setActiveWords(testWords);
+
+        assertEquals(1, g.getActiveWords().size());
+
+        g.refreshActiveWords(q);
+        assertEquals(q, g.getActiveQuote());
+        assertEquals(2, g.getActiveWords().size());
+        assertEquals("test", g.getActiveWords().get(0).getWord());
+        assertEquals("quote", g.getActiveWords().get(1).getWord());
+
+    }
+
+    @Test
+    public void testSKeyEvent() throws IOException {
+        g.keyPressed(KeyEvent.VK_S);
+        // read the data from the file
+    }
+
+    @Test
+    public void testLKeyEvent() throws IOException {
+        g.keyPressed(KeyEvent.VK_L);
+        // read the data from the file
+    }
+
+    @Test
+    public void testSpaceKeyEvent() throws IOException {
+        g.keyPressed(KeyEvent.VK_SPACE);
+        assertTrue(g.getSpaceBarPressed());
+        g.initializeBullet(5, 5);
+        assertEquals(1, g.getActiveBullets().size());
+        g.keyPressed(KeyEvent.VK_SPACE);
+        g.initializeBullet(6, 6);
+        g.keyPressed(KeyEvent.VK_SPACE);
+        g.initializeBullet(7, 7);
+        assertEquals(3, g.getActiveBullets().size());
     }
 }

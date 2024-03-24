@@ -23,6 +23,13 @@ public class WordBlockTest {
     }
 
     @Test
+    public void moveTest() {
+        w.move();
+        assertEquals(6, w.getY());
+        assertEquals(1, w.getX());
+    }
+
+    @Test
     public void setWordTest() {
         w.setX(5);
         assertEquals(5, w.getX());

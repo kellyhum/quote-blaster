@@ -23,4 +23,10 @@ public class QuoteListTest {
         q.addQuote(this.quote);
         assertEquals(1, q.getQuoteList().size());
     }
+
+    @Test
+    public void getQuoteTest() {
+        q.addQuote(this.quote);
+        assertEquals(this.quote, q.getQuoteAtIndex(0));
+    }
 }
