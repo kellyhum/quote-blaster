@@ -175,6 +175,26 @@ public class GameTest {
     }
 
     @Test
+    public void bulletWordNotColliding() {
+        Rectangle testBullet = new Rectangle(2, 1, 10, 10);
+        Rectangle testWord = new Rectangle(50, 110, 15, 15);
+        WordBlock testWordBlock = new WordBlock("test", 2, 1);
+        testWordBlock.setHit(true);
+        g.getActiveWords().add(testWordBlock);
+        g.setSpaceBarPressed();
+        g.initializeBullet(2, 1);
+
+        assertEquals(0, g.getScore());
+        assertTrue(g.getActiveWords().get(0).getHit());
+
+        g.bulletWordCollision();
+
+        assertFalse(testBullet.intersects(testWord));
+        assertEquals(0, g.getScore());
+        assertTrue(g.getActiveWords().get(0).getHit());
+    }
+
+    @Test
     public void splitQuoteTest() {
         g.setActiveQuote(new Quote("test quote"));
         g.splitQuoteIntoWords(4, 3);
