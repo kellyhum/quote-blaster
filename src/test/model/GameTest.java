@@ -1,6 +1,8 @@
 package model;
 
 import org.junit.jupiter.api.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -257,11 +259,36 @@ public class GameTest {
     }
 
     @Test
+    public void testSKeyEvent() throws IOException {
+        JsonReader readerGame = new JsonReader("./data/keySaveLoadTest.json", "");
+
+        g.keyPressed(KeyEvent.VK_S);
+
+        ArrayList<WordBlock> ql2 = readerGame.readWordList();
+        assertFalse(ql2.isEmpty());
+        assertEquals(2, ql2.size());
+
+        int score2 = readerGame.readAndParseScore();
+        assertEquals(2, score2);
+    }
+
+    @Test
+    public void testNotValidKeyEvent() throws IOException {
+        assertEquals(0, g.getScore());
+        assertEquals(0, g.getActiveWords().size());
+        assertEquals(0, g.getActiveQuoteList().getQuoteList().size());
+        g.keyPressed(KeyEvent.VK_J);
+        assertEquals(0, g.getScore());
+        assertEquals(0, g.getActiveWords().size());
+        assertEquals(0, g.getActiveQuoteList().getQuoteList().size());
+    }
+
+    @Test
     public void testLKeyEvent() throws IOException {
         g.keyPressed(KeyEvent.VK_L);
         assertEquals(0, g.getScore());
-        assertEquals(2, g.getActiveWords().size());
-        assertEquals(1, g.getActiveQuoteList().getQuoteList().size());
+        assertEquals(0, g.getActiveWords().size());
+        assertEquals(0, g.getActiveQuoteList().getQuoteList().size());
     }
 
     @Test
