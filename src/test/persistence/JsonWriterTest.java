@@ -30,10 +30,9 @@ public class JsonWriterTest extends JsonTest {
     @Test
     public void testWriteNullQuoteList() {
         try {
-            QuoteList ql = new QuoteList();
             JsonWriter writer = new JsonWriter("./data/emptyQuoteListWriter.json");
             writer.open();
-            writer.writeQuoteList(ql);
+            writer.writeQuoteList(null);
             writer.close();
             JsonReader reader = new JsonReader("", "./data/emptyQuoteListWriter.json");
             QuoteList ql2 = reader.readQuoteList();

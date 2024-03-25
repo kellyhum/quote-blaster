@@ -98,8 +98,10 @@ public class GameTest {
 
     @Test
     public void bulletWordCollisionPassesTest() {
-        WordBlock testWord = new WordBlock("test", 2, 1);
-        g.getActiveWords().add(testWord);
+        Rectangle testBullet = new Rectangle(2, 1, 10, 10);
+        Rectangle testWord = new Rectangle(2, 1, 15, 15);
+        WordBlock testWordBlock = new WordBlock("test", 2, 1);
+        g.getActiveWords().add(testWordBlock);
         g.setSpaceBarPressed();
         g.initializeBullet(2, 1);
 
@@ -108,6 +110,7 @@ public class GameTest {
 
         g.bulletWordCollision();
 
+        assertTrue(testBullet.intersects(testWord));
         assertEquals(1, g.getScore());
         assertTrue(g.getActiveWords().get(0).getHit());
     }
@@ -134,8 +137,10 @@ public class GameTest {
 
     @Test
     public void bulletWordCollisionDiffYTest() {
-        WordBlock testWord = new WordBlock("test", 2, 1);
-        g.getActiveWords().add(testWord);
+        Rectangle testBullet = new Rectangle(1, 1, 10, 10);
+        Rectangle testWord = new Rectangle(2, 1, 15, 15);
+        WordBlock testWordBlock = new WordBlock("test", 2, 1);
+        g.getActiveWords().add(testWordBlock);
         g.setSpaceBarPressed();
         g.initializeBullet(2, 6);
 
@@ -144,15 +149,18 @@ public class GameTest {
 
         g.bulletWordCollision();
 
+        assertTrue(testBullet.intersects(testWord));
         assertEquals(1, g.getScore());
         assertTrue(g.getActiveWords().get(0).getHit());
     }
 
     @Test
     public void bulletWordCollisionHitTrueTest() {
-        WordBlock testWord = new WordBlock("test", 2, 1);
-        testWord.setHit(true);
-        g.getActiveWords().add(testWord);
+        Rectangle testBullet = new Rectangle(2, 1, 10, 10);
+        Rectangle testWord = new Rectangle(2, 1, 15, 15);
+        WordBlock testWordBlock = new WordBlock("test", 2, 1);
+        testWordBlock.setHit(true);
+        g.getActiveWords().add(testWordBlock);
         g.setSpaceBarPressed();
         g.initializeBullet(2, 1);
 
@@ -161,6 +169,7 @@ public class GameTest {
 
         g.bulletWordCollision();
 
+        assertTrue(testBullet.intersects(testWord));
         assertEquals(0, g.getScore());
         assertTrue(g.getActiveWords().get(0).getHit());
     }
