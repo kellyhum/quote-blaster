@@ -2,9 +2,10 @@ package model;
 
 import org.junit.jupiter.api.*;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.sql.Array;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -111,8 +112,11 @@ public class GameTest {
 
     @Test
     public void bulletWordCollisionDiffXTest() {
-        WordBlock testWord = new WordBlock("test", 2, 1);
-        g.getActiveWords().add(testWord);
+        Rectangle testBullet = new Rectangle(1, 1, 10, 10);
+        Rectangle testWord = new Rectangle(2, 1, 15, 15);
+        WordBlock testWordBlock = new WordBlock("test", 2, 1);
+
+        g.getActiveWords().add(testWordBlock);
         g.setSpaceBarPressed();
         g.initializeBullet(1, 1);
 
@@ -121,10 +125,9 @@ public class GameTest {
 
         g.bulletWordCollision();
 
+        assertTrue(testBullet.intersects(testWord));
         assertEquals(1, g.getScore());
-        //assertEquals(0, g.getScore());
         assertTrue(g.getActiveWords().get(0).getHit());
-        //assertFalse(g.getActiveWords().get(0).getHit());
     }
 
     @Test
@@ -140,9 +143,7 @@ public class GameTest {
         g.bulletWordCollision();
 
         assertEquals(1, g.getScore());
-        //assertEquals(0, g.getScore());
         assertTrue(g.getActiveWords().get(0).getHit());
-        //assertFalse(g.getActiveWords().get(0).getHit());
     }
 
     @Test
@@ -256,15 +257,11 @@ public class GameTest {
     }
 
     @Test
-    public void testSKeyEvent() throws IOException {
-        g.keyPressed(KeyEvent.VK_S);
-        // read the data from the file
-    }
-
-    @Test
     public void testLKeyEvent() throws IOException {
         g.keyPressed(KeyEvent.VK_L);
-        // read the data from the file
+        assertEquals(0, g.getScore());
+        assertEquals(2, g.getActiveWords().size());
+        assertEquals(1, g.getActiveQuoteList().getQuoteList().size());
     }
 
     @Test

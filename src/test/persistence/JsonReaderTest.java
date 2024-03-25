@@ -50,6 +50,17 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
+    public void testEmptyJsonObject() {
+        JsonReader reader = new JsonReader("", "./data/emptyJsonObject.json");
+        try {
+            QuoteList ql = reader.readQuoteList();
+            assertTrue(ql.getQuoteList().isEmpty());
+        } catch (IOException e) {
+            fail("not supposed to throw");
+        }
+    }
+
+    @Test
     public void testEmptyWordListAndScore() {
         JsonReader reader = new JsonReader("./data/noWordsOrScore.json", "");
         try {

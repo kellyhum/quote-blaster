@@ -28,6 +28,23 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
+    public void testWriteNullQuoteList() {
+        try {
+            QuoteList ql = new QuoteList();
+            JsonWriter writer = new JsonWriter("./data/emptyQuoteListWriter.json");
+            writer.open();
+            writer.writeQuoteList(ql);
+            writer.close();
+            JsonReader reader = new JsonReader("", "./data/emptyQuoteListWriter.json");
+            QuoteList ql2 = reader.readQuoteList();
+            assertTrue(ql2.getQuoteList().isEmpty());
+            assertEquals(0, ql2.getQuoteList().size());
+        } catch (IOException e) {
+            fail("should not have been thrown");
+        }
+    }
+
+    @Test
     public void testWriteQuoteList() {
         try {
             QuoteList ql = new QuoteList();
