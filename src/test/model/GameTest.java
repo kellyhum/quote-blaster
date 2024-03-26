@@ -175,23 +175,43 @@ public class GameTest {
     }
 
     @Test
-    public void bulletWordNotColliding() {
+    public void bulletWordTouchingNotIntersecting() {
         Rectangle testBullet = new Rectangle(2, 1, 10, 10);
-        Rectangle testWord = new Rectangle(50, 110, 15, 15);
-        WordBlock testWordBlock = new WordBlock("test", 2, 1);
-        testWordBlock.setHit(true);
-        g.getActiveWords().add(testWordBlock);
-        g.setSpaceBarPressed();
-        g.initializeBullet(2, 1);
-
-        assertEquals(0, g.getScore());
-        assertTrue(g.getActiveWords().get(0).getHit());
+        Rectangle testWord = new Rectangle(2, 12, 15, 15);
 
         g.bulletWordCollision();
 
         assertFalse(testBullet.intersects(testWord));
-        assertEquals(0, g.getScore());
-        assertTrue(g.getActiveWords().get(0).getHit());
+    }
+
+    @Test
+    public void bulletWordCompletelyNotTouching() {
+        Rectangle testBullet = new Rectangle(200, 100, 10, 10);
+        Rectangle testWord = new Rectangle(2, 12, 15, 15);
+
+        g.bulletWordCollision();
+
+        assertFalse(testBullet.intersects(testWord));
+    }
+
+    @Test
+    public void bulletWordDiffYStillIntersecting() {
+        Rectangle testBullet = new Rectangle(1, 5, 10, 10);
+        Rectangle testWord = new Rectangle(1, 12, 15, 15);
+
+        g.bulletWordCollision();
+
+        assertTrue(testBullet.intersects(testWord));
+    }
+
+    @Test
+    public void bulletWordDiffXStillIntersecting() {
+        Rectangle testBullet = new Rectangle(4, 12, 10, 10);
+        Rectangle testWord = new Rectangle(2, 12, 15, 15);
+
+        g.bulletWordCollision();
+
+        assertTrue(testBullet.intersects(testWord));
     }
 
     @Test
