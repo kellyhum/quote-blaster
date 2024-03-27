@@ -341,6 +341,18 @@ public class GameTest {
     }
 
     @Test
+    public void testRightArrowKeyEvent() throws IOException {
+        g.keyPressed(KeyEvent.VK_RIGHT);
+        assertEquals(-1.3, g.getRotationAngle());
+    }
+
+    @Test
+    public void testLeftArrowKeyEvent() throws IOException {
+        g.keyPressed(KeyEvent.VK_LEFT);
+        assertEquals(-1.7, g.getRotationAngle());
+    }
+
+    @Test
     public void testSpaceKeyEvent() throws IOException {
         g.keyPressed(KeyEvent.VK_SPACE);
         assertTrue(g.getSpaceBarPressed());

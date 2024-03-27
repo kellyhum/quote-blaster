@@ -238,4 +238,8 @@ public class Game {
     public ArrayList<Bullet> getActiveBullets() {
         return activeBullets;
     }
+
+    public double getRotationAngle() {
+        return rotationAngle;
+    }
 }
