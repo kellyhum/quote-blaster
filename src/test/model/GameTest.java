@@ -38,14 +38,14 @@ public class GameTest {
 
         g.setActiveWords(testWords);
         g.setSpaceBarPressed();
-        g.update(15, 15);
+        g.update(35, 35);
 
         assertEquals(1, g.getActiveWords().size());
         assertEquals(1, g.getActiveBullets().size());
         assertFalse(g.getSpaceBarPressed());
 
-        assertEquals(15, g.getActiveBullets().get(0).getX());
-        assertEquals(7, g.getActiveBullets().get(0).getY());
+        assertEquals(35, g.getActiveBullets().get(0).getX());
+        assertEquals(27, g.getActiveBullets().get(0).getY());
         assertEquals(2, g.getActiveWords().get(0).getX());
         assertEquals(6, g.getActiveWords().get(0).getY());
     }
@@ -74,7 +74,7 @@ public class GameTest {
         g.updateBulletAndWords();
 
         assertEquals(2, g.getActiveBullets().get(0).getX());
-        assertEquals(-6, g.getActiveBullets().get(0).getY());
+        assertEquals(-5, g.getActiveBullets().get(0).getY());
     }
 
     @Test
