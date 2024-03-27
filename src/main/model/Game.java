@@ -25,6 +25,7 @@ public class Game {
 
     private int score;
     private boolean spaceBarPressed;
+    private double rotationAngle = -1.5;
 
     private ArrayList<Bullet> activeBullets;
     private Quote activeQuote;
@@ -72,7 +73,7 @@ public class Game {
     // to the list and set the space bar to false
     public void initializeBullet(int x, int y) {
         if (spaceBarPressed) {
-            Bullet b = new Bullet(x, y);
+            Bullet b = new Bullet(x, y, rotationAngle);
             activeBullets.add(b);
             spaceBarPressed = false;
         }
@@ -94,12 +95,14 @@ public class Game {
     // EFFECTS: checks if the bullet has collided with the word. if so, increase the score
     // if not, move the bullet
     public void bulletWordCollision() {
-        for (Bullet b : activeBullets) {
+        for (int i = 0; i < activeBullets.size(); i++) {
             for (WordBlock w : activeWords) {
                 // is there a way to make the if condition better?
-                if (new Rectangle(b.getX(), b.getY(), 10, 10).intersects(new Rectangle(w.getX(), w.getY(), 15, 15))) {
+                if (new Rectangle(activeBullets.get(i).getX(), activeBullets.get(i).getY(), 10, 10).intersects(
+                        new Rectangle(w.getX(), w.getY(), 15, 15))) {
                     if (!w.getHit()) {
                         incScore();
+                        activeBullets.remove(activeBullets.get(i));
                         w.setHit(true);
                     }
                 }
@@ -133,7 +136,7 @@ public class Game {
         for (String s : splitQuote) {
             //int randomXPos = WIDTH / 2 + 5; // TESTING PURPOSES ONLY
             int randomXPos = random.nextInt(width);
-            int randomYPos = random.nextInt(height);
+            int randomYPos = random.nextInt(100);
 
             activeWords.add(new WordBlock(s, randomXPos, randomYPos));
         }
@@ -158,6 +161,10 @@ public class Game {
             activeQuoteList = reader.readQuoteList();
             activeWords = reader.readWordList();
             score = reader.readAndParseScore();
+        } else if (keyCode == KeyEvent.VK_LEFT) {
+            rotationAngle -= 0.2;
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            rotationAngle += 0.2;
         }
     }
 
