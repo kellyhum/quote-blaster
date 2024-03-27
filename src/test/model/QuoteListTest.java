@@ -29,4 +29,11 @@ public class QuoteListTest {
         q.addQuote(this.quote);
         assertEquals(this.quote, q.getQuoteAtIndex(0));
     }
+
+    @Test
+    public void removeQuoteTest() {
+        q.addQuote(this.quote);
+        q.removeQuote(0);
+        assertEquals(0, q.getQuoteList().size());
+    }
 }
