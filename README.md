@@ -1,22 +1,20 @@
-# Personal Project - Accio Quotes
-## A Java game about blasting words that form a Harry Potter quote
+# Personal Project
+## A Java game about blasting words that form a quote
 
 ### What is it?
-This is a game where the objective is to shoot words in a Harry Potter quote and acquire as many
-points possible. The top of the page will be a quote, color coded green if the word 
-has been shot, red if there's a missed word, or grey at startup. Words will fall from
-the top of the page, and the player will be positioned at the middle bottom of the screen.
-Unable to move, the player will only be able to aim at the words, but will have a full 180
-degree range of shooting motion.
+This is a game where the objective is to shoot words in a quote and acquire as many
+points possible. Words will fall from the top of the page, and the player will be positioned at 
+the middle bottom of the screen. Unable to move, the player will only be able to aim at the words, 
+but will have a full 180 degree range of shooting motion.
 
 To summarize, here are the following key objects will be on screen:
 - player
-- "aiming dots"
 - bullets
 - words
-- quote
-- button that goes back to the "all quotes" screen
-- input for adding quotes
+- quote window
+  - input for adding quotes
+  - viewing the quote list
+  - playing a specific quote
 
 ### Who's the target audience and why am I making this?
 This game is targeted towards fans of Harry Potter, or those who have knowledge of the series. As a reader 
@@ -33,3 +31,21 @@ could make my own version of "EmilyBlaster".
 - As a user, I want to see my score increase when I hit the correct words
 - As a user, I want to be able to save my game and quote list states when S is pressed (if I choose)
 - As a user, I want to be able to load my saved game and quote list states when L is pressed (if I choose)
+
+# Instructions for Grader
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by
+  - launch the program
+  - click on the "change quote" button at the top
+  - click the add button
+  - enter any specified input (0 based indexing)
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by
+  - launch the program
+  - click the "change quote" button
+  - click the remove button
+  - enter any specified input (also 0 based indexing)
+- You can locate my visual component by...
+  - running the program
+- You can save the state of my application by
+  - clicking the s button on your keyboard
+- You can reload the state of my application by
+  - clicking the l button on your keyboard
