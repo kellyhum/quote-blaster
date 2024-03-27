@@ -24,6 +24,12 @@ public class QuoteList {
         return quoteList.get(index);
     }
 
+    // REQUITES: quoteList.size() >= 1
+    // EFFECTS: removes the quote at the specified index
+    public void removeQuote(int index) {
+        quoteList.remove(index);
+    }
+
     // getter
     public ArrayList<Quote> getQuoteList() {
         return quoteList;
