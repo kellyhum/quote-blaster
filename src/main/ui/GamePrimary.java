@@ -1,15 +1,21 @@
 package ui;
 
+import model.EventLog;
 import model.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 /*
     Code referenced from https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+    Window shutdown code reference from https://edstem.org/us/courses/50358/discussion/4674357 (#1485)
 
     Main entry into the program, ticks and initializes Game, GameDisplay, and ScoreDisplay Swing objects
  */
@@ -23,6 +29,7 @@ public class GamePrimary extends JFrame {
     // and ScoreDisplaySwing objects. initializes key listeners, centres window, begins ticking
     public GamePrimary() throws InterruptedException {
         super("Project Starter");
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops running on close
         game = new Game();
         gameDisplay = new GameDisplaySwing(game);
@@ -33,6 +40,10 @@ public class GamePrimary extends JFrame {
         pack();
         setLocationRelativeTo(null); // centres on screen
         setVisible(true);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println(EventLog.getInstance().getEvents());
+        }));
 
         while (true) {
             tick();

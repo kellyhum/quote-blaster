@@ -27,6 +27,9 @@ public class QuoteList {
     // REQUITES: quoteList.size() >= 1
     // EFFECTS: removes the quote at the specified index
     public void removeQuote(int index) {
+        EventLog.getInstance().logEvent(
+                new Event("removed quote '"
+                        + quoteList.get(index).getQuoteText() + "' from quote list"));
         quoteList.remove(index);
     }
 

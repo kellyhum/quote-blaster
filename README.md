@@ -49,3 +49,7 @@ could make my own version of "EmilyBlaster".
   - clicking the s button on your keyboard
 - You can reload the state of my application by
   - clicking the l button on your keyboard
+### Phase 4: Task 2
+"[Tue Apr 02 15:18:53 PDT 2024
+added quote 'testing quote' to quote list, Tue Apr 02 15:18:57 PDT 2024
+removed quote 'testing quote' from quote list]"

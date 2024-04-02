@@ -212,6 +212,8 @@ public class Game {
     // EFFECTS: sets the quote list to the parameter value
     public void addToActiveQuoteList(Quote q) {
         activeQuoteList.addQuote(q);
+        EventLog.getInstance().logEvent(new Event("added quote '"
+                + q.getQuoteText() + "' to quote list"));
     }
 
     // getters
