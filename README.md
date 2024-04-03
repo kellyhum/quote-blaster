@@ -53,3 +53,14 @@ could make my own version of "EmilyBlaster".
 "[Tue Apr 02 15:18:53 PDT 2024
 added quote 'testing quote' to quote list, Tue Apr 02 15:18:57 PDT 2024
 removed quote 'testing quote' from quote list]"
+
+### Phase 4: Task 3
+When looking at the UML diagram, you'd notice that GamePrimary, GameDisplaySwing, and ScoreDisplaySwing
+all contain one Game object as a field. Going further, a Game object is passed into GamePrimary, GameDisplaySwing,
+and ScoreDisplaySwing, so that changes made in each class to the Game object would be reflected globally.
+There's probably a better way to refactor this, given the amount of repetition - perhaps having
+the ScoreDisplaySwing object extend the GameDisplaySwing would work better? That way the same Game object
+can be passed down without having to pass it down as a parameter, which creates an extra field. Another refactoring
+change that can be made is the fact that there are 2 JsonWriters, thus 2 json files created. 
+Because they both do the same task (have the same code in them), but write to different files, it would 
+be better to have one JsonWriter write to a single json file instead.
